@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { ProfileIcon } from '@/components/layout/ProfileIcon'
@@ -9,7 +9,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { CREDITS_PACKAGE } from '@/lib/constants'
 import { useAuth } from '@/contexts/AuthContext'
 
-export default function OfferPage() {
+function OfferContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { user } = useAuth()
@@ -157,5 +157,13 @@ export default function OfferPage() {
         </div>
       </main>
     </div>
+  )
+}
+
+export default function OfferPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <OfferContent />
+    </Suspense>
   )
 }
