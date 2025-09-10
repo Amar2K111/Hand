@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-light-bg text-text-dark;
+  }
+}
+
+@layer components {
+  .neon-glow {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+  
+  .card-gradient {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  }
+  
+  .hero-gradient {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  }
+}
