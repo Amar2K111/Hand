@@ -40,8 +40,10 @@ export default function SignInPage() {
 
     try {
       await signIn(formData.email, formData.password)
+      // Keep loading state true until navigation happens
       // Navigation will be handled by useEffect
     } catch (error: any) {
+      setIsLoading(false) // Only reset loading on error
       if (error.code === 'auth/user-not-found') {
         setErrors({ email: 'No account found with this email' })
       } else if (error.code === 'auth/wrong-password') {
@@ -51,8 +53,6 @@ export default function SignInPage() {
       } else {
         setErrors({ general: 'An error occurred. Please try again.' })
       }
-    } finally {
-      setIsLoading(false)
     }
   }
 
@@ -73,8 +73,10 @@ export default function SignInPage() {
 
     try {
       await signInWithGoogle()
+      // Keep loading state true until navigation happens
       // Navigation will be handled by useEffect
     } catch (error: any) {
+      setIsGoogleLoading(false) // Only reset loading on error
       if (error.code === 'auth/popup-closed-by-user') {
         setErrors({ general: 'Sign-in was cancelled' })
       } else if (error.code === 'auth/popup-blocked') {
@@ -82,8 +84,6 @@ export default function SignInPage() {
       } else {
         setErrors({ general: 'Google sign-in failed. Please try again.' })
       }
-    } finally {
-      setIsGoogleLoading(false)
     }
   }
 

@@ -30,38 +30,30 @@ export const ExampleGallery: React.FC = () => {
 
   return (
     <div className="py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-text-dark mb-4">
-            See What You're Getting Into 👀
-          </h2>
-                     <p className="text-xl text-text-gray">
-             Real examples of our brutally honest feedback
-           </p>
+      <div className="text-center mb-12 px-4">
+        <h2 className="text-3xl font-bold text-text-dark mb-4">
+          See What You're Getting Into 👀
+        </h2>
+        <p className="text-xl text-text-gray">
+          Real examples of our brutally honest feedback
+        </p>
+      </div>
+
+      {/* Two Picture Containers - Auto-sized to fit images */}
+      <div className="flex justify-center space-x-16 py-8">
+        <div className="rounded-lg overflow-hidden shadow-lg">
+          <img 
+            src="/images/Capture d'écran 2025-09-10 201913.png" 
+            alt="Professional hand modeling example - elegant hand pose" 
+            className="max-w-[40rem] max-h-[40rem] object-contain"
+          />
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {examples.map((example) => (
-            <Card key={example.id} className="relative overflow-hidden">
-              {/* Placeholder for hand image */}
-              <div className="w-full h-48 bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg mb-4 flex items-center justify-center">
-                <div className="text-6xl">👐</div>
-              </div>
-
-              {/* Score Overlay */}
-              <div className="text-center space-y-3">
-                                 <div className={`text-4xl font-bold ${example.color}`}>
-                   {example.score}/100
-                 </div>
-                <div className="text-2xl">
-                  {example.verdict}
-                </div>
-                               <div className="text-text-gray italic text-sm">
-                 "{example.roast}"
-               </div>
-              </div>
-            </Card>
-          ))}
+        <div className="rounded-lg overflow-hidden shadow-lg">
+          <img 
+            src="/images/Capture d'écran 2025-09-10 202026.png" 
+            alt="Hand modeling example - jewelry showcase" 
+            className="max-w-[40rem] max-h-[40rem] object-contain"
+          />
         </div>
       </div>
     </div>

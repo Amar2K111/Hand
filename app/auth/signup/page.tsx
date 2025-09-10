@@ -54,8 +54,10 @@ export default function SignUpPage() {
 
     try {
       await signUp(formData.email, formData.password)
+      // Keep loading state true until navigation happens
       // Navigation will be handled by useEffect
     } catch (error: any) {
+      setIsLoading(false) // Only reset loading on error
       if (error.code === 'auth/email-already-in-use') {
         setErrors({ email: 'An account with this email already exists' })
       } else if (error.code === 'auth/invalid-email') {
@@ -65,8 +67,6 @@ export default function SignUpPage() {
       } else {
         setErrors({ general: 'An error occurred. Please try again.' })
       }
-    } finally {
-      setIsLoading(false)
     }
   }
 
@@ -76,8 +76,10 @@ export default function SignUpPage() {
 
     try {
       await signInWithGoogle()
+      // Keep loading state true until navigation happens
       // Navigation will be handled by useEffect
     } catch (error: any) {
+      setIsGoogleLoading(false) // Only reset loading on error
       if (error.code === 'auth/popup-closed-by-user') {
         setErrors({ general: 'Sign-up was cancelled' })
       } else if (error.code === 'auth/popup-blocked') {
@@ -85,8 +87,6 @@ export default function SignUpPage() {
       } else {
         setErrors({ general: 'Google sign-up failed. Please try again.' })
       }
-    } finally {
-      setIsGoogleLoading(false)
     }
   }
 

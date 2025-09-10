@@ -150,10 +150,22 @@ export default function OfferPage() {
           </div>
         </div>
 
-        {/* Two Picture Containers - Way bigger and square */}
-        <div className="flex justify-center space-x-12 py-8">
-          <div className="w-[28rem] h-[28rem] bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg"></div>
-          <div className="w-[28rem] h-[28rem] bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg"></div>
+        {/* Two Picture Containers - Auto-sized to fit images */}
+        <div className="flex justify-center space-x-16 py-8">
+          <div className="rounded-lg overflow-hidden shadow-lg">
+            <img 
+              src="/images/Capture d'écran 2025-09-10 201913.png" 
+              alt="Professional hand modeling example - elegant hand pose" 
+              className="max-w-[40rem] max-h-[40rem] object-contain"
+            />
+          </div>
+          <div className="rounded-lg overflow-hidden shadow-lg">
+            <img 
+              src="/images/Capture d'écran 2025-09-10 202026.png" 
+              alt="Hand modeling example - jewelry showcase" 
+              className="max-w-[40rem] max-h-[40rem] object-contain"
+            />
+          </div>
         </div>
       </main>
     </div>
