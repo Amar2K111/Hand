@@ -109,7 +109,7 @@ export default function PaymentSuccessPage() {
             </Button>
             <Button
               onClick={() => router.push('/upload')}
-              variant="outline"
+              variant="secondary"
               className="w-full"
             >
               Start Uploading

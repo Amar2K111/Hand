@@ -129,7 +129,7 @@ export default function DashboardPage() {
                     <div className="flex-1 pr-4">
                       <div className="relative h-full">
                         <img 
-                          src={previewUrl} 
+                          src={previewUrl || ''} 
                           alt="Uploaded" 
                           className="w-full h-full object-contain rounded-lg border-2 border-gray-300 bg-gray-50"
                         />
@@ -198,7 +198,7 @@ export default function DashboardPage() {
                     {previewUrl ? (
                       <div className="relative">
                         <img 
-                          src={previewUrl} 
+                          src={previewUrl || ''} 
                           alt="Preview" 
                           className="w-full h-64 object-cover rounded-lg border-2 border-gray-300"
                         />

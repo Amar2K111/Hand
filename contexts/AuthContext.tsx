@@ -14,6 +14,7 @@ interface UserData {
   onboardingData?: any
   provider?: string
   totalUploads?: number
+  uploadsRemaining?: number
 }
 
 interface AuthContextType {
@@ -113,8 +114,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           // Set user with default values on error (only for new users)
           setUser({
             ...user,
-            totalUploads: user?.totalUploads ?? 0,
-            uploadsRemaining: user?.uploadsRemaining ?? 0
+            totalUploads: 0,
+            uploadsRemaining: 0
           } as User & UserData)
         }
       } else {
