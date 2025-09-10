@@ -2,10 +2,17 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { CREDITS_PACKAGE } from '@/lib/constants'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null
 
 export async function POST(request: NextRequest) {
   try {
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Stripe not configured' },
+        { status: 500 }
+      )
+    }
+    
     console.log('Creating checkout session...')
     console.log('Stripe secret key exists:', !!process.env.STRIPE_SECRET_KEY)
     console.log('Stripe secret key starts with:', process.env.STRIPE_SECRET_KEY?.substring(0, 10))
