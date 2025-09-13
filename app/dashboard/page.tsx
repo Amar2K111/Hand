@@ -56,7 +56,8 @@ export default function DashboardPage() {
   // No need to load from localStorage as it has size limits with base64 images
 
   const handleUploadClick = () => {
-    // Always allow file selection - we'll check uploads when generating
+    // Single upload button that works the same on both mobile and desktop
+    // Mobile will automatically show gallery/camera options when clicked
     fileInputRef.current?.click()
   }
 
@@ -262,7 +263,7 @@ export default function DashboardPage() {
                     {isMobile && (
                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-2xl mx-auto">
                         <p className="text-blue-800 text-sm">
-                          <span className="font-semibold">📱 Mobile Tips:</span> Choose "Files" to browse your photos, or "Gallery" to take a new photo with your camera. Make sure your hands are well-lit and clearly visible!
+                          <span className="font-semibold">📱 Mobile Tips:</span> Click "Upload Photo" to choose from your gallery or take a new photo with your camera. Make sure your hands are well-lit and clearly visible!
                         </p>
                       </div>
                     )}
@@ -310,17 +311,13 @@ export default function DashboardPage() {
                           <p className="text-gray-500 text-sm sm:text-base mb-1 font-medium">
                             {isDragOver 
                               ? 'Drop your photo here' 
-                              : isMobile 
-                                ? 'Tap to upload your hand photo' 
-                                : 'Click to upload your hand photo'
+                              : 'Click to upload your hand photo'
                             }
                           </p>
                           <p className="text-gray-400 text-xs sm:text-sm">
                             {isDragOver 
                               ? '' 
-                              : isMobile 
-                                ? 'or use the buttons below' 
-                                : 'or drag & drop, or use buttons below'
+                              : 'or drag & drop, or use the button below'
                             }
                           </p>
                         </div>
@@ -330,38 +327,15 @@ export default function DashboardPage() {
 
                   {/* Upload Options */}
                   <div className="w-full max-w-md mx-auto">
-                    {isMobile ? (
-                      // Mobile: Show options when button is pressed
-                      <div className="space-y-3">
-                        <Button
-                          onClick={handleUploadClick}
-                          size="lg"
-                          className="w-full text-lg py-4 min-h-[56px] flex items-center justify-center gap-3 touch-manipulation"
-                        >
-                          <span className="text-xl">📁</span>
-                          <span>Files</span>
-                        </Button>
-                        <Button
-                          onClick={handleCameraClick}
-                          size="lg"
-                          variant="secondary"
-                          className="w-full text-lg py-4 min-h-[56px] flex items-center justify-center gap-3 touch-manipulation"
-                        >
-                          <span className="text-xl">📷</span>
-                          <span>Gallery</span>
-                        </Button>
-                      </div>
-                    ) : (
-                      // Desktop: Single upload button
-                      <Button
-                        onClick={handleUploadClick}
-                        size="lg"
-                        className="w-full text-lg py-4 min-h-[56px] flex items-center justify-center gap-3"
-                      >
-                        <span className="text-xl">📁</span>
-                        <span>Upload Photo</span>
-                      </Button>
-                    )}
+                    {/* Single Upload Button - Same for both mobile and desktop */}
+                    <Button
+                      onClick={handleUploadClick}
+                      size="lg"
+                      className="w-full text-lg py-4 min-h-[56px] flex items-center justify-center gap-3 touch-manipulation"
+                    >
+                      <span className="text-xl">📁</span>
+                      <span>Upload Photo</span>
+                    </Button>
                   </div>
                 </div>
               </Card>
