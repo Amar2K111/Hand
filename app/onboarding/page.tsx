@@ -224,16 +224,16 @@ export default function OnboardingPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 md:py-12 px-4">
         {/* Profile Icon - Floating in top right */}
         <ProfileIcon />
         
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-6 md:mb-8">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
               Discover Your Hand Modeling Potential
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-lg md:text-xl text-gray-600 px-4">
               Let's find out if you have what it takes to become a hand model
             </p>
           </div>

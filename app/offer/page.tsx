@@ -63,18 +63,18 @@ function OfferContent() {
       {/* Profile Icon - Floating in top right */}
       <ProfileIcon />
       
-      <main className="flex-1 py-12 px-4">
-        <div className="flex justify-center mb-12">
+      <main className="flex-1 py-8 md:py-12 px-4">
+        <div className="flex justify-center mb-8 md:mb-12">
           <div className="max-w-md w-full relative">
           
-          {/* Back Button - Further left of container, higher up */}
-          <div className="absolute -left-24 top-8 z-10">
+          {/* Back Button - Responsive positioning */}
+          <div className="absolute -left-16 md:-left-24 top-4 md:top-8 z-10">
             <button
               onClick={() => router.back()}
-              className="flex items-center space-x-2 text-gray-600 hover:text-gray-800 transition-colors duration-200"
+              className="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-800 transition-colors duration-200"
             >
-              <span className="text-2xl">←</span>
-              <span className="font-medium">Back</span>
+              <span className="text-xl md:text-2xl">←</span>
+              <span className="font-medium text-sm md:text-base">Back</span>
             </button>
           </div>
           
@@ -91,23 +91,23 @@ function OfferContent() {
           )}
 
           {/* Simple Pricing Container */}
-          <Card className="text-center py-12 mb-8">
-            <div className="space-y-6">
-              <div className="space-y-4">
-                <div className="text-6xl">👐</div>
-                <h2 className="text-3xl font-bold text-gray-900">
+          <Card className="text-center py-8 md:py-12 mb-6 md:mb-8">
+            <div className="space-y-4 md:space-y-6">
+              <div className="space-y-3 md:space-y-4">
+                <div className="text-4xl md:text-6xl">👐</div>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
                   Get Your Hand Rating
                 </h2>
-                <p className="text-gray-600 text-lg">
+                <p className="text-gray-600 text-base md:text-lg px-4">
                   Professional hand modeling assessment
                 </p>
               </div>
 
               {/* Price Display */}
               <div className="text-center">
-                <div className="text-5xl font-bold text-neon-blue mb-2">$15</div>
-                <p className="text-gray-500">for 25 pictures</p>
-                <p className="text-sm text-gray-400">That's only $0.60 per picture!</p>
+                <div className="text-4xl md:text-5xl font-bold text-neon-blue mb-2">$15</div>
+                <p className="text-gray-500 text-sm md:text-base">for 25 pictures</p>
+                <p className="text-xs md:text-sm text-gray-400">That's only $0.60 per picture!</p>
               </div>
 
               {/* Features List */}
@@ -139,7 +139,7 @@ function OfferContent() {
 
               <Button
                 size="lg"
-                className="w-full text-lg py-4"
+                className="w-full text-base md:text-lg py-3 md:py-4"
                 onClick={handlePayment}
                 disabled={isLoading}
               >
@@ -150,20 +150,22 @@ function OfferContent() {
           </div>
         </div>
 
-        {/* Two Picture Containers - Auto-sized to fit images */}
-        <div className="flex justify-center space-x-16 py-8">
-          <div className="rounded-lg overflow-hidden shadow-lg">
+        {/* Two Picture Containers - Responsive layout */}
+        <div className="flex flex-col md:flex-row justify-center gap-8 md:gap-16 py-6 md:py-8 px-4">
+          <div className="rounded-lg overflow-hidden shadow-lg max-w-full">
             <img 
               src="/images/Capture d'écran 2025-09-10 201913.png" 
               alt="Professional hand modeling example - elegant hand pose" 
-              className="max-w-[40rem] max-h-[40rem] object-contain"
+              className="w-full max-w-[20rem] md:max-w-[25rem] lg:max-w-[30rem] h-auto object-contain mx-auto"
+              loading="lazy"
             />
           </div>
-          <div className="rounded-lg overflow-hidden shadow-lg">
+          <div className="rounded-lg overflow-hidden shadow-lg max-w-full">
             <img 
               src="/images/Capture d'écran 2025-09-10 202026.png" 
               alt="Hand modeling example - jewelry showcase" 
-              className="max-w-[40rem] max-h-[40rem] object-contain"
+              className="w-full max-w-[20rem] md:max-w-[25rem] lg:max-w-[30rem] h-auto object-contain mx-auto"
+              loading="lazy"
             />
           </div>
         </div>

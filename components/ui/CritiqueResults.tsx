@@ -39,9 +39,9 @@ export const CritiqueResults: React.FC<CritiqueResultsProps> = ({
   }
 
   return (
-    <div className="h-full flex flex-col space-y-4">
+    <div className="h-full flex flex-col space-y-3 md:space-y-4">
       {/* Score Section - Bright and Prominent - Sticky */}
-      <div className={`p-6 rounded-lg ${getScoreBgColor(critique.score)} border-2 sticky top-0 z-20`}>
+      <div className={`p-4 md:p-6 rounded-lg ${getScoreBgColor(critique.score)} border-2 sticky top-0 z-20`}>
         {/* Logo in top left corner - fixed position */}
         <div className="absolute top-2 left-2 z-10">
           <div className="text-xs font-bold bg-neon-blue text-white px-2 py-1 rounded-lg shadow-sm">
@@ -49,11 +49,11 @@ export const CritiqueResults: React.FC<CritiqueResultsProps> = ({
           </div>
         </div>
         <div className="text-center">
-          <div className={`text-7xl font-black ${getScoreColor(critique.score)} mb-2 drop-shadow-lg`}>
+          <div className={`text-5xl md:text-7xl font-black ${getScoreColor(critique.score)} mb-2 drop-shadow-lg`}>
             {critique.score}
           </div>
-          <div className="text-xl text-gray-600 mb-3">out of 100</div>
-          <div className={`text-xl font-bold ${getVerdictColor(critique.verdict)}`}>
+          <div className="text-lg md:text-xl text-gray-600 mb-2 md:mb-3">out of 100</div>
+          <div className={`text-lg md:text-xl font-bold ${getVerdictColor(critique.verdict)} px-2`}>
             {critique.verdict} {critique.verdict.includes('Hand Model Material') || critique.verdict.includes('Fire') || critique.verdict.includes('Slay') ? '✨' : critique.score < 50 ? '🥀' : ''}
           </div>
         </div>
@@ -61,9 +61,9 @@ export const CritiqueResults: React.FC<CritiqueResultsProps> = ({
 
        {/* Critique - One Container with Color Theme */}
        <div className="flex-1 overflow-y-auto">
-         <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-4 rounded-lg border border-gray-200">
+         <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-3 md:p-4 rounded-lg border border-gray-200">
            {/* Analysis */}
-           <div className="mb-4">
+           <div className="mb-3 md:mb-4">
              <h3 className="text-sm font-bold text-gray-800 mb-2">📝 Analysis</h3>
              <ul className="space-y-1">
                {(() => {
@@ -113,7 +113,7 @@ export const CritiqueResults: React.FC<CritiqueResultsProps> = ({
            </div>
 
            {/* Strengths */}
-           <div className="mb-4">
+           <div className="mb-3 md:mb-4">
              <h3 className="text-sm font-bold text-green-800 mb-2">✨ Strengths</h3>
              <ul className="space-y-1">
                {critique.strengths && critique.strengths.length > 0 ? (
@@ -154,7 +154,7 @@ export const CritiqueResults: React.FC<CritiqueResultsProps> = ({
 
       {/* Action Button */}
       <div className="pt-2">
-        <Button onClick={onRetry} variant="secondary" size="sm" className="w-full">
+        <Button onClick={onRetry} variant="secondary" size="sm" className="w-full touch-manipulation">
           📸 Try Another Photo
         </Button>
       </div>

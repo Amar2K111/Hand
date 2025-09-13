@@ -29,6 +29,7 @@ interface AuthContextType {
   isNewUser: boolean
   onboardingData: any
   updateTotalUploads: (newTotal: number) => Promise<void>
+  skipOnboardingForLanguage: (language: string) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -287,6 +288,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }
 
+  const skipOnboardingForLanguage = async (language: string) => {
+    if (!user) return
+    
+    // Skip onboarding for French and Spanish users
+    if (language === 'fr' || language === 'es') {
+      try {
+        await setDoc(doc(db, 'users', user.uid), {
+          onboardingCompleted: true
+        }, { merge: true })
+        setIsNewUser(false)
+      } catch (error) {
+        console.error('Error skipping onboarding for language:', error)
+        throw error
+      }
+    }
+  }
+
   const value = {
     user,
     loading,
@@ -298,7 +316,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     saveOnboardingProgress,
     isNewUser,
     onboardingData,
-    updateTotalUploads
+    updateTotalUploads,
+    skipOnboardingForLanguage
   }
 
   return (

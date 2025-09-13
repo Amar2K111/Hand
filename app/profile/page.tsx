@@ -73,35 +73,35 @@ export default function ProfilePage() {
         <Header />
         <Navbar />
       
-      <main className="flex-1 py-12 px-4">
+      <main className="flex-1 py-8 md:py-12 px-4">
         <div className="max-w-4xl mx-auto">
           {/* Page Header with Back Button */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-6">
+          <div className="mb-6 md:mb-8">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
               <Button
                 onClick={() => router.push('/dashboard')}
                 variant="secondary"
                 size="sm"
                 className="flex items-center space-x-2"
               >
-                ← Back to Dashboard
+                ← <span className="hidden sm:inline">Back to Dashboard</span>
               </Button>
               <div className="flex-1"></div>
             </div>
             <div className="text-center">
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
                 Profile Settings
               </h1>
-              <p className="text-xl text-gray-600">
+              <p className="text-lg md:text-xl text-gray-600 px-4">
                 Manage your account and preferences
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
             {/* Profile Card */}
             <div className="lg:col-span-1">
-              <Card className="p-6 text-center">
+              <Card className="p-4 md:p-6 text-center">
                 {/* Profile Avatar */}
                 <div className="mb-6">
                   {user.photoURL ? (
@@ -147,7 +147,7 @@ export default function ProfilePage() {
 
             {/* Settings Section */}
             <div className="lg:col-span-2">
-              <Card className="p-6">
+              <Card className="p-4 md:p-6">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-xl font-semibold text-gray-900">
                     Account Information
@@ -180,7 +180,7 @@ export default function ProfilePage() {
                       disabled
                     />
                     
-                    <div className="flex space-x-3 pt-4">
+                    <div className="flex flex-col sm:flex-row gap-3 pt-4">
                       <Button
                         onClick={handleSave}
                         disabled={isLoading}
@@ -228,7 +228,7 @@ export default function ProfilePage() {
               </Card>
 
               {/* Uploads Section */}
-              <Card className="p-6 mt-6">
+              <Card className="p-4 md:p-6 mt-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">
                   📤 Upload Credits
                 </h3>
@@ -261,7 +261,7 @@ export default function ProfilePage() {
 
 
               {/* Danger Zone */}
-              <Card className="p-6 mt-6 border-red-200 bg-red-50">
+              <Card className="p-4 md:p-6 mt-6 border-red-200 bg-red-50">
                 <h3 className="text-xl font-semibold text-red-900 mb-4">
                   ⚠️ Danger Zone
                 </h3>

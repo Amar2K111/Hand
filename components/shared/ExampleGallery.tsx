@@ -2,8 +2,10 @@
 
 import React from 'react'
 import { Card } from '../ui/Card'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export const ExampleGallery: React.FC = () => {
+  const { t } = useLanguage()
   const examples = [
     {
       id: 1,
@@ -32,28 +34,34 @@ export const ExampleGallery: React.FC = () => {
     <div className="py-16">
       <div className="text-center mb-12 px-4">
         <h2 className="text-3xl font-bold text-text-dark mb-4">
-          See What You're Getting Into 👀
+          {t('examples.title')}
         </h2>
         <p className="text-xl text-text-gray">
-          Real examples of our brutally honest feedback
+          {t('examples.subtitle')}
         </p>
       </div>
 
-      {/* Two Picture Containers - Auto-sized to fit images */}
-      <div className="flex justify-center space-x-16 py-8">
-        <div className="rounded-lg overflow-hidden shadow-lg">
-          <img 
-            src="/images/Capture d'écran 2025-09-10 201913.png" 
-            alt="Professional hand modeling example - elegant hand pose" 
-            className="max-w-[40rem] max-h-[40rem] object-contain"
-          />
+      {/* Two Picture Containers - Enhanced Responsive layout */}
+      <div className="flex flex-col lg:flex-row justify-center items-center gap-6 lg:gap-12 xl:gap-16 py-8 px-4">
+        <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl">
+          <div className="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+            <img 
+              src="/images/Capture d'écran 2025-09-10 201913.png" 
+              alt="Professional hand modeling example - elegant hand pose" 
+              className="w-full h-auto object-contain"
+              loading="lazy"
+            />
+          </div>
         </div>
-        <div className="rounded-lg overflow-hidden shadow-lg">
-          <img 
-            src="/images/Capture d'écran 2025-09-10 202026.png" 
-            alt="Hand modeling example - jewelry showcase" 
-            className="max-w-[40rem] max-h-[40rem] object-contain"
-          />
+        <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl">
+          <div className="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+            <img 
+              src="/images/Capture d'écran 2025-09-10 202026.png" 
+              alt="Hand modeling example - jewelry showcase" 
+              className="w-full h-auto object-contain"
+              loading="lazy"
+            />
+          </div>
         </div>
       </div>
     </div>

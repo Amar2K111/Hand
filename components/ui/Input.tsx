@@ -34,7 +34,7 @@ export const Input: React.FC<InputProps> = ({
       <input
         id={inputId}
         className={cn(
-          'w-full px-4 py-3 bg-white border border-border-color rounded-lg text-text-dark placeholder-text-gray focus:outline-none focus:ring-2 focus:ring-neon-blue focus:border-transparent transition-all duration-200',
+          'w-full px-4 py-3 bg-white border border-border-color rounded-lg text-text-dark placeholder-text-gray focus:outline-none focus:ring-2 focus:ring-neon-blue focus:border-transparent transition-all duration-200 min-h-[44px] text-base',
           error && 'border-neon-red focus:ring-neon-red',
           props.disabled ? 'bg-gray-50 text-gray-400 cursor-not-allowed' : 'cursor-text',
           className

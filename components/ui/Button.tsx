@@ -16,7 +16,7 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   ...props
 }) => {
-  const baseClasses = 'font-bold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-bg'
+  const baseClasses = 'font-bold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-bg touch-manipulation'
   
   const variants = {
     primary: 'bg-neon-blue hover:bg-blue-500 text-white focus:ring-neon-blue shadow-lg hover:shadow-xl',
@@ -26,9 +26,9 @@ export const Button: React.FC<ButtonProps> = ({
   }
   
   const sizes = {
-    sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-4 text-lg'
+    sm: 'px-4 py-2 text-sm min-h-[44px]',
+    md: 'px-6 py-3 text-base min-h-[44px]',
+    lg: 'px-8 py-4 text-lg min-h-[48px]'
   }
 
   return (

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { APP_NAME } from '@/lib/constants'
+import { SettingsModal } from '@/components/ui/SettingsModal'
 
 export const ProfileIcon: React.FC = () => {
   const { user, logout } = useAuth()
@@ -10,6 +11,7 @@ export const ProfileIcon: React.FC = () => {
   const router = useRouter()
   const isHomePage = pathname === '/'
   const [showDropdown, setShowDropdown] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Never show profile icon on home page
@@ -113,6 +115,15 @@ export const ProfileIcon: React.FC = () => {
                   👤 Profile
                 </Link>
                 <button
+                  onClick={() => {
+                    setShowSettings(true)
+                    setShowDropdown(false)
+                  }}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200"
+                >
+                  ⚙️ Settings
+                </button>
+                <button
                   onClick={handleLogout}
                   className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200"
                 >
@@ -123,6 +134,12 @@ export const ProfileIcon: React.FC = () => {
           )}
         </div>
       )}
+
+      {/* Settings Modal */}
+      <SettingsModal 
+        isOpen={showSettings} 
+        onClose={() => setShowSettings(false)} 
+      />
     </>
   )
 }
