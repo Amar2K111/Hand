@@ -8,11 +8,13 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { loadStripe } from '@stripe/stripe-js'
 import { CREDITS_PACKAGE } from '@/lib/constants'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 function OfferContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { user } = useAuth()
+  const { t } = useLanguage()
   const hasWarning = searchParams.get('warning') === 'no-uploads'
   const [isLoading, setIsLoading] = useState(false)
 
@@ -74,7 +76,7 @@ function OfferContent() {
               className="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-800 transition-colors duration-200"
             >
               <span className="text-xl md:text-2xl">←</span>
-              <span className="font-medium text-sm md:text-base">Back</span>
+              <span className="font-medium text-sm md:text-base">{t('offer.back')}</span>
             </button>
           </div>
           
@@ -82,9 +84,9 @@ function OfferContent() {
           {hasWarning && (
             <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
               <div className="flex items-center justify-center space-x-2">
-                <span className="text-yellow-600">⚠️</span>
+                <span className="text-yellow-600">{t('offer.warningTitle')}</span>
                 <p className="text-yellow-800 text-sm">
-                  You have 0 uploads remaining. Purchase more credits to continue.
+                  {t('offer.warningMessage')}
                 </p>
               </div>
             </div>
@@ -96,43 +98,43 @@ function OfferContent() {
               <div className="space-y-3 md:space-y-4">
                 <div className="text-4xl md:text-6xl">👐</div>
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-                  Get Your Hand Rating
+                  {t('offer.title')}
                 </h2>
                 <p className="text-gray-600 text-base md:text-lg px-4">
-                  Professional hand modeling assessment
+                  {t('offer.subtitle')}
                 </p>
               </div>
 
               {/* Price Display */}
               <div className="text-center">
                 <div className="text-4xl md:text-5xl font-bold text-neon-blue mb-2">$15</div>
-                <p className="text-gray-500 text-sm md:text-base">for 25 pictures</p>
-                <p className="text-xs md:text-sm text-gray-400">That's only $0.60 per picture!</p>
+                <p className="text-gray-500 text-sm md:text-base">{t('offer.price')}</p>
+                <p className="text-xs md:text-sm text-gray-400">{t('offer.perPicture')}</p>
               </div>
 
               {/* Features List */}
               <div className="text-left space-y-3">
-                <h3 className="font-semibold text-gray-900 text-center mb-4">What You Get:</h3>
+                <h3 className="font-semibold text-gray-900 text-center mb-4">{t('offer.whatYouGet')}</h3>
                 <ul className="space-y-2">
                   <li className="flex items-start space-x-3">
-                    <span className="text-neon-blue text-lg">•</span>
-                    <span className="text-gray-700">Score out of 100 for each picture</span>
+                    <span className="text-green-500 text-lg">✓</span>
+                    <span className="text-gray-700">{t('offer.scoreOutOf')}</span>
                   </li>
                   <li className="flex items-start space-x-3">
-                    <span className="text-neon-blue text-lg">•</span>
-                    <span className="text-gray-700">Expert feedback and analysis</span>
+                    <span className="text-green-500 text-lg">✓</span>
+                    <span className="text-gray-700">{t('offer.expertFeedback')}</span>
                   </li>
                   <li className="flex items-start space-x-3">
-                    <span className="text-neon-blue text-lg">•</span>
-                    <span className="text-gray-700">Improvement tips and suggestions</span>
+                    <span className="text-green-500 text-lg">✓</span>
+                    <span className="text-gray-700">{t('offer.improvementTips')}</span>
                   </li>
                   <li className="flex items-start space-x-3">
-                    <span className="text-neon-blue text-lg">•</span>
-                    <span className="text-gray-700">Hand model potential verdict</span>
+                    <span className="text-green-500 text-lg">✓</span>
+                    <span className="text-gray-700">{t('offer.verdict')}</span>
                   </li>
                   <li className="flex items-start space-x-3">
-                    <span className="text-neon-blue text-lg">•</span>
-                    <span className="text-gray-700">Unlimited time to use credits</span>
+                    <span className="text-green-500 text-lg">✓</span>
+                    <span className="text-gray-700">{t('offer.unlimitedTime')}</span>
                   </li>
                 </ul>
               </div>
@@ -143,7 +145,7 @@ function OfferContent() {
                 onClick={handlePayment}
                 disabled={isLoading}
               >
-                {isLoading ? 'Processing...' : `Buy for $${CREDITS_PACKAGE.price}`}
+                {isLoading ? t('offer.processing') : `${t('offer.buyFor')}${CREDITS_PACKAGE.price}`}
               </Button>
             </div>
           </Card>

@@ -15,6 +15,7 @@ interface UserData {
   provider?: string
   totalUploads?: number
   uploadsRemaining?: number
+  language?: 'en' | 'es' | 'fr'
 }
 
 interface AuthContextType {
@@ -30,6 +31,7 @@ interface AuthContextType {
   onboardingData: any
   updateTotalUploads: (newTotal: number) => Promise<void>
   skipOnboardingForLanguage: (language: string) => Promise<void>
+  updateUserLanguage: (language: 'en' | 'es' | 'fr') => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -60,7 +62,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             // Set user with default values when document doesn't exist
             setUser({
               ...user,
-              totalUploads: 0
+              totalUploads: 0,
+              language: 'en'
             } as User & UserData)
           } else {
             // Check if onboarding is completed from cloud data
@@ -103,7 +106,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               ...user,
               ...userData,
               totalUploads: userData?.totalUploads || 0,
-              uploadsRemaining: userData?.uploadsRemaining || 0
+              uploadsRemaining: userData?.uploadsRemaining || 0,
+              language: userData?.language || 'en'
             } as User & UserData
             
             setUser(mergedUser)
@@ -116,7 +120,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUser({
             ...user,
             totalUploads: 0,
-            uploadsRemaining: 0
+            uploadsRemaining: 0,
+            language: 'en'
           } as User & UserData)
         }
       } else {
@@ -305,6 +310,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }
 
+  const updateUserLanguage = async (language: 'en' | 'es' | 'fr') => {
+    if (!user) return
+    
+    try {
+      await setDoc(doc(db, 'users', user.uid), {
+        language: language
+      }, { merge: true })
+      
+      // Update local user state
+      setUser(prev => prev ? { ...prev, language: language } : null)
+    } catch (error) {
+      console.error('Error updating user language:', error)
+      throw error
+    }
+  }
+
   const value = {
     user,
     loading,
@@ -317,7 +338,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     isNewUser,
     onboardingData,
     updateTotalUploads,
-    skipOnboardingForLanguage
+    skipOnboardingForLanguage,
+    updateUserLanguage
   }
 
   return (

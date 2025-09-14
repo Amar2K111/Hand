@@ -11,6 +11,7 @@ Each user document in the `users` collection contains the following fields:
   // ... other user fields ...
   uploadsRemaining: number,        // Number of uploads user can use anytime (default: 0)
   totalUploads: number,            // Total uploads ever made by user (default: 0)
+  language: string,                // User's preferred language: 'en', 'es', or 'fr' (default: 'en')
   email: string,
   displayName: string,
   createdAt: Date,
@@ -63,7 +64,8 @@ uploadsRemaining: uploadsRemaining + 5  // Add 5 more uploads
   createdAt: "2024-01-01T00:00:00Z",
   onboardingCompleted: true,
   uploadsRemaining: 10,
-  totalUploads: 5
+  totalUploads: 5,
+  language: "en"
 }
 ```
 
@@ -75,6 +77,7 @@ users/
 ├── {userId}/
 │   ├── uploadsRemaining: number
 │   ├── totalUploads: number
+│   ├── language: string
 │   └── critiques/ (subcollection)
 │       ├── {critiqueId1}/
 │       ├── {critiqueId2}/
@@ -95,6 +98,8 @@ users/
 - Uploads can be added when needed
 - No automatic refill of uploads - users must purchase credits
 - Critiques are automatically saved to user's subcollection
+- Language preference is automatically saved to cloud database
+- Photo critique results are generated in the user's preferred language
 
 ## API Functions Available
 
@@ -103,3 +108,17 @@ The `useUploads` hook provides these functions:
 - `addUploads(amount)` - Add more uploads to user's account
 - `canUpload()` - Check if user can upload
 - `getUploadsUsed()` - Get total number of uploads used
+
+The `useAuth` hook provides these additional functions:
+- `updateUserLanguage(language)` - Update user's preferred language in cloud database
+- Language is automatically loaded from cloud database on user login
+- Language changes are automatically saved to both cloud database and localStorage
+
+## Language Management
+
+- **Supported Languages**: English ('en'), Spanish ('es'), French ('fr')
+- **Default Language**: English ('en')
+- **Storage**: Language preference is stored in both Firebase cloud database and localStorage
+- **Fallback**: If cloud language is not available, falls back to localStorage
+- **AI Generation**: Photo critique results are generated in the user's preferred language
+- **Persistence**: Language preference persists across devices and sessions

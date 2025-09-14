@@ -9,8 +9,8 @@ interface ClientAuthProviderProps {
 
 export default function ClientAuthProvider({ children }: ClientAuthProviderProps) {
   return (
-    <LanguageProvider>
-      <AuthProvider>{children}</AuthProvider>
-    </LanguageProvider>
+    <AuthProvider>
+      <LanguageProvider>{children}</LanguageProvider>
+    </AuthProvider>
   )
 }

@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
-import { useLanguage } from '@/contexts/LanguageContext'
 import { useUploads } from '@/hooks/useUploads'
 import { generateHandCritique, convertFileToBase64 } from '@/lib/gemini'
 import { doc, setDoc, collection, addDoc } from 'firebase/firestore'
@@ -22,7 +21,6 @@ export interface HandCritique {
 
 export const useHandCritique = () => {
   const { user } = useAuth()
-  const { language } = useLanguage()
   const { decrementUploads } = useUploads()
   const [isUploading, setIsUploading] = useState(false)
   const [currentCritique, setCurrentCritique] = useState<HandCritique | null>(null)
@@ -44,8 +42,9 @@ export const useHandCritique = () => {
       // Convert image to base64
       const imageBase64 = await convertFileToBase64(file)
 
-      // Generate critique using Gemini with current language
-      const critiqueData = await generateHandCritique(imageBase64, language)
+      // Generate critique using Gemini with user's cloud-stored language
+      const userLanguage = user.language || 'en'
+      const critiqueData = await generateHandCritique(imageBase64, userLanguage)
 
       // Create critique object
       const critique: HandCritique = {

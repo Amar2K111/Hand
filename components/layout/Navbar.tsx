@@ -3,8 +3,10 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { APP_NAME } from '@/lib/constants'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export const Navbar: React.FC = () => {
+  const { t } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -43,28 +45,28 @@ export const Navbar: React.FC = () => {
                   className="block px-3 py-2 text-text-gray hover:text-neon-blue transition-colors duration-200"
                   onClick={() => setIsOpen(false)}
                 >
-                  Dashboard
+                  {t('navbar.dashboard')}
                 </Link>
                 <Link
                   href="/offer"
                   className="block px-3 py-2 text-text-gray hover:text-neon-blue transition-colors duration-200"
                   onClick={() => setIsOpen(false)}
                 >
-                  Get Credits
+                  {t('navbar.getCredits')}
                 </Link>
                 <Link
                   href="/auth/signin"
                   className="block px-3 py-2 text-text-gray hover:text-text-dark transition-colors duration-200"
                   onClick={() => setIsOpen(false)}
                 >
-                  Sign In
+                  {t('navbar.signIn')}
                 </Link>
               <Link
                 href="/auth/signup"
                 className="block px-3 py-2 bg-neon-blue hover:bg-blue-600 text-white rounded-lg font-medium transition-colors duration-200"
                 onClick={() => setIsOpen(false)}
               >
-                Sign Up
+                {t('navbar.signUp')}
               </Link>
             </div>
           </div>

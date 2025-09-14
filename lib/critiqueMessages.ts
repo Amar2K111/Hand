@@ -143,272 +143,182 @@ export const MULTILINGUAL_CRITIQUE_MESSAGES = {
     // Scores 0-10 (Very Poor)
     veryPoor: [
       "Feo",
-      "Terrible",
-      "Basura",
+      "Malo",
+      "Pobre",
       "No",
-      "Maldito",
-      "Crustáceo",
-      "Asqueroso",
-      "Horrible",
-      "Pésimo",
-      "Pésimo"
+      "Terrible"
     ],
     
     // Scores 11-20 (Poor)
     poor: [
-      "Nah",
+      "No",
       "Feo",
       "Pobre",
-      "Abajo del promedio",
-      "Necesita trabajo",
-      "No está bien",
-      "Mal estado",
-      "Áspero",
-      "No bonito",
+      "Mal",
       "Débil"
     ],
     
     // Scores 21-30 (Below Average)
     belowAverage: [
-      "Llegando ahí",
-      "Mejor pero nah",
-      "Casi ahí",
-      "Acercándose al promedio",
-      "Acercándose",
-      "Abajo del promedio"
+      "Regular",
+      "Medio",
+      "Bajo",
+      "Mejor",
+      "Casi"
     ],
     
     // Scores 31-40 (Below Average+)
     belowAveragePlus: [
-      "Cerca del promedio",
       "Medio",
+      "Regular",
       "Promedio",
-      "Promedio pero nah",
-      "Justo en el promedio",
-      "Cumpliendo estándares",
-      "Exactamente la línea base",
-      "Calidad promedio",
-      "Cumpliendo requisitos",
-      "Nivel estándar"
+      "Bien",
+      "Normal"
     ],
     
     // Scores 41-50 (Average)
     average: [
-      "Justo en el objetivo",
-      "Cumpliendo expectativas",
-      "En nivel aceptable",
-      "Calidad base",
-      "Calidad estándar",
-      "Cumpliendo necesidades básicas",
-      "Promedio pero sólido",
-      "Cumpliendo estándares mínimos",
-      "Calidad estándar"
+      "Bien",
+      "Normal",
+      "Promedio",
+      "Regular",
+      "Bueno"
     ],
     
     // Scores 51-60 (Above Average)
     aboveAverage: [
-      "Ligeramente arriba del promedio",
-      "Mejor de lo esperado",
-      "Arriba de la línea base",
-      "Arriba del estándar",
-      "Superando el mínimo",
-      "Buena calidad",
-      "Arriba del par",
-      "Excediendo expectativas",
-      "Mejor que el promedio",
-      "Arriba de la línea base"
+      "Bueno",
+      "Mejor",
+      "Bien",
+      "Sólido",
+      "Fuerte"
     ],
     
     // Scores 61-70 (Good)
     good: [
-      "Bueno en general",
-      "Calidad sólida",
-      "Bien arriba del promedio",
-      "Buena calidad",
-      "Excediendo estándares",
-      "Calidad fuerte",
-      "Bueno pero espacio para crecer",
-      "Bien hecho",
-      "Buenos resultados",
-      "Calidad sólida"
+      "Bueno",
+      "Sólido",
+      "Fuerte",
+      "Bien",
+      "Mejor"
     ],
     
     // Scores 71-80 (Very Good)
     veryGood: [
       "Muy bueno",
-      "Calidad excelente",
-      "Bien arriba del estándar",
-      "Muy buena calidad",
-      "Resultados sobresalientes",
-      "Muy bueno pero no perfecto",
       "Excelente",
-      "Calidad muy fuerte",
-      "Bien ejecutado",
-      "Muy bueno en general"
+      "Sobresaliente",
+      "Genial",
+      "Perfecto"
     ],
     
     // Scores 81-90 (Excellent)
     excellent: [
       "Excelente",
-      "Calidad sobresaliente",
-      "Calidad excepcional",
-      "Resultados excelentes",
+      "Perfecto",
+      "Genial",
       "Sobresaliente",
-      "Excepcional",
-      "Excelente pero no perfecto",
-      "Calidad sobresaliente",
-      "Excepcional",
-      "Calidad excelente"
+      "Increíble"
     ],
     
     // Scores 91-100 (Perfect/Exceptional)
     perfect: [
       "Perfecto",
-      "Calidad excepcional",
-      "Calidad sobresaliente",
-      "Calidad perfecta",
-      "Resultados excepcionales",
-      "Sobresaliente",
-      "Calidad perfecta",
-      "Calidad excepcional",
-      "Calidad sobresaliente",
-      "Resultados perfectos"
+      "Increíble",
+      "Genial",
+      "Excelente",
+      "Sobresaliente"
     ]
   },
   fr: {
     // Scores 0-10 (Very Poor)
     veryPoor: [
       "Moche",
-      "Terrible",
-      "Poubelle",
+      "Mauvais",
+      "Pauvre",
       "Non",
-      "Maudit",
-      "Crouteux",
-      "Dégoûtant",
-      "Horrible",
-      "Affreux",
       "Terrible"
     ],
     
     // Scores 11-20 (Poor)
     poor: [
-      "Nah",
+      "Non",
       "Moche",
       "Pauvre",
-      "En dessous de la moyenne",
-      "Besoin de travail",
-      "Pas bon",
-      "Mauvais état",
-      "Rugueux",
-      "Pas joli",
+      "Mal",
       "Faible"
     ],
     
     // Scores 21-30 (Below Average)
     belowAverage: [
-      "En train d'arriver",
-      "Mieux mais nah",
-      "Presque là",
-      "Approchant la moyenne",
-      "Se rapprochant",
-      "En dessous de la moyenne"
+      "Moyen",
+      "Bas",
+      "Faible",
+      "Mieux",
+      "Presque"
     ],
     
     // Scores 31-40 (Below Average+)
     belowAveragePlus: [
-      "Près de la moyenne",
       "Moyen",
-      "Moyen",
-      "Moyen mais nah",
-      "Juste à la moyenne",
-      "Répondant aux standards",
-      "Exactement la ligne de base",
-      "Qualité moyenne",
-      "Répondant aux exigences",
-      "Niveau standard"
+      "Normal",
+      "Bas",
+      "Bien",
+      "Correct"
     ],
     
     // Scores 41-50 (Average)
     average: [
-      "Juste sur l'objectif",
-      "Répondant aux attentes",
-      "Au niveau acceptable",
-      "Qualité de base",
-      "Qualité standard",
-      "Répondant aux besoins de base",
-      "Moyen mais solide",
-      "Répondant aux standards minimaux",
-      "Qualité standard"
+      "Bien",
+      "Normal",
+      "Correct",
+      "Moyen",
+      "Bon"
     ],
     
     // Scores 51-60 (Above Average)
     aboveAverage: [
-      "Légèrement au-dessus de la moyenne",
-      "Mieux que prévu",
-      "Au-dessus de la ligne de base",
-      "Au-dessus du standard",
-      "Dépassant le minimum",
-      "Bonne qualité",
-      "Au-dessus du pair",
-      "Dépassant les attentes",
-      "Mieux que la moyenne",
-      "Au-dessus de la ligne de base"
+      "Bon",
+      "Mieux",
+      "Bien",
+      "Solide",
+      "Fort"
     ],
     
     // Scores 61-70 (Good)
     good: [
-      "Bon en général",
-      "Qualité solide",
-      "Bien au-dessus de la moyenne",
-      "Bonne qualité",
-      "Dépassant les standards",
-      "Qualité forte",
-      "Bon mais de la place pour grandir",
-      "Bien fait",
-      "Bons résultats",
-      "Qualité solide"
+      "Bon",
+      "Solide",
+      "Fort",
+      "Bien",
+      "Mieux"
     ],
     
     // Scores 71-80 (Very Good)
     veryGood: [
       "Très bon",
-      "Qualité excellente",
-      "Bien au-dessus du standard",
-      "Très bonne qualité",
-      "Résultats exceptionnels",
-      "Très bon mais pas parfait",
       "Excellent",
-      "Qualité très forte",
-      "Bien exécuté",
-      "Très bon en général"
+      "Parfait",
+      "Génial",
+      "Super"
     ],
     
     // Scores 81-90 (Excellent)
     excellent: [
       "Excellent",
-      "Qualité exceptionnelle",
-      "Qualité exceptionnelle",
-      "Résultats excellents",
-      "Exceptionnel",
-      "Exceptionnel",
-      "Excellent mais pas parfait",
-      "Qualité exceptionnelle",
-      "Exceptionnel",
-      "Qualité excellente"
+      "Parfait",
+      "Génial",
+      "Super",
+      "Incroyable"
     ],
     
     // Scores 91-100 (Perfect/Exceptional)
     perfect: [
       "Parfait",
-      "Qualité exceptionnelle",
-      "Qualité exceptionnelle",
-      "Qualité parfaite",
-      "Résultats exceptionnels",
-      "Exceptionnel",
-      "Qualité parfaite",
-      "Qualité exceptionnelle",
-      "Qualité exceptionnelle",
-      "Résultats parfaits"
+      "Incroyable",
+      "Génial",
+      "Excellent",
+      "Super"
     ]
   }
 }

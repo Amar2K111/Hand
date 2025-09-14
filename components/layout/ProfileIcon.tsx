@@ -2,11 +2,13 @@ import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { APP_NAME } from '@/lib/constants'
 import { SettingsModal } from '@/components/ui/SettingsModal'
 
 export const ProfileIcon: React.FC = () => {
   const { user, logout } = useAuth()
+  const { t } = useLanguage()
   const pathname = usePathname()
   const router = useRouter()
   const isHomePage = pathname === '/'
@@ -98,21 +100,21 @@ export const ProfileIcon: React.FC = () => {
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200"
                   onClick={() => setShowDropdown(false)}
                 >
-                  🏠 Dashboard
+                  {t('profile.dashboard')}
                 </Link>
                 <Link 
                   href="/gallery" 
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200"
                   onClick={() => setShowDropdown(false)}
                 >
-                  🖼️ Gallery
+                  {t('profile.gallery')}
                 </Link>
                 <Link 
                   href="/profile" 
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200"
                   onClick={() => setShowDropdown(false)}
                 >
-                  👤 Profile
+                  {t('profile.profile')}
                 </Link>
                 <button
                   onClick={() => {
@@ -121,13 +123,13 @@ export const ProfileIcon: React.FC = () => {
                   }}
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200"
                 >
-                  ⚙️ Settings
+                  {t('profile.settings')}
                 </button>
                 <button
                   onClick={handleLogout}
                   className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200"
                 >
-                  🚪 Sign Out
+                  {t('profile.logout')}
                 </button>
               </div>
             </div>

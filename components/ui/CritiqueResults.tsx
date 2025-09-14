@@ -4,6 +4,7 @@ import React from 'react'
 import { Card } from './Card'
 import { Button } from './Button'
 import { HandCritique } from '@/hooks/useHandCritique'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface CritiqueResultsProps {
   critique: HandCritique
@@ -14,6 +15,7 @@ export const CritiqueResults: React.FC<CritiqueResultsProps> = ({
   critique,
   onRetry
 }) => {
+  const { t } = useLanguage()
   // Debug: Log the critique data to see what we're getting
   console.log('Critique data:', critique)
   const getScoreColor = (score: number) => {
@@ -52,7 +54,7 @@ export const CritiqueResults: React.FC<CritiqueResultsProps> = ({
           <div className={`text-5xl md:text-7xl font-black ${getScoreColor(critique.score)} mb-2 drop-shadow-lg`}>
             {critique.score}
           </div>
-          <div className="text-lg md:text-xl text-gray-600 mb-2 md:mb-3">out of 100</div>
+          <div className="text-lg md:text-xl text-gray-600 mb-2 md:mb-3">{t('dashboard.outOf')}</div>
           <div className={`text-lg md:text-xl font-bold ${getVerdictColor(critique.verdict)} px-2`}>
             {critique.verdict} {critique.verdict.includes('Hand Model Material') || critique.verdict.includes('Fire') || critique.verdict.includes('Slay') ? '✨' : critique.score < 50 ? '🥀' : ''}
           </div>
@@ -64,7 +66,7 @@ export const CritiqueResults: React.FC<CritiqueResultsProps> = ({
          <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-3 md:p-4 rounded-lg border border-gray-200">
            {/* Analysis */}
            <div className="mb-3 md:mb-4">
-             <h3 className="text-sm font-bold text-gray-800 mb-2">📝 Analysis</h3>
+             <h3 className="text-sm font-bold text-gray-800 mb-2">{t('dashboard.analysis')}</h3>
              <ul className="space-y-1">
                {(() => {
                  // Clean up the critique text - remove JSON formatting if present
@@ -114,7 +116,7 @@ export const CritiqueResults: React.FC<CritiqueResultsProps> = ({
 
            {/* Strengths */}
            <div className="mb-3 md:mb-4">
-             <h3 className="text-sm font-bold text-green-800 mb-2">✨ Strengths</h3>
+             <h3 className="text-sm font-bold text-green-800 mb-2">{t('dashboard.strengths')}</h3>
              <ul className="space-y-1">
                {critique.strengths && critique.strengths.length > 0 ? (
                  critique.strengths
@@ -126,14 +128,14 @@ export const CritiqueResults: React.FC<CritiqueResultsProps> = ({
                    </li>
                  ))
                ) : (
-                 <li className="text-sm text-gray-500 italic">No strengths identified</li>
+                 <li className="text-sm text-gray-500 italic">{t('dashboard.noStrengths')}</li>
                )}
              </ul>
            </div>
 
            {/* Weaknesses */}
            <div>
-             <h3 className="text-sm font-bold text-red-800 mb-2">⚠️ Weaknesses</h3>
+             <h3 className="text-sm font-bold text-red-800 mb-2">{t('dashboard.weaknesses')}</h3>
              <ul className="space-y-1">
                {critique.improvements && critique.improvements.length > 0 ? (
                  critique.improvements
@@ -145,7 +147,7 @@ export const CritiqueResults: React.FC<CritiqueResultsProps> = ({
                    </li>
                  ))
                ) : (
-                 <li className="text-sm text-gray-500 italic">No weaknesses identified</li>
+                 <li className="text-sm text-gray-500 italic">{t('dashboard.noWeaknesses')}</li>
                )}
              </ul>
            </div>
@@ -155,7 +157,7 @@ export const CritiqueResults: React.FC<CritiqueResultsProps> = ({
       {/* Action Button */}
       <div className="pt-2">
         <Button onClick={onRetry} variant="secondary" size="sm" className="w-full touch-manipulation">
-          📸 Try Another Photo
+          {t('dashboard.tryAnotherPhoto')}
         </Button>
       </div>
     </div>

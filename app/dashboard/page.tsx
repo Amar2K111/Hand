@@ -13,10 +13,12 @@ import { ProfileIcon } from '@/components/layout/ProfileIcon'
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 import { useHandCritique, HandCritique } from '@/hooks/useHandCritique'
 import { useUploads } from '@/hooks/useUploads'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function DashboardPage() {
   const { user } = useAuth()
   const router = useRouter()
+  const { t } = useLanguage()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
@@ -57,7 +59,8 @@ export default function DashboardPage() {
 
   const handleUploadClick = () => {
     // Single upload button that works the same on both mobile and desktop
-    // Mobile will automatically show gallery/camera options when clicked
+    // On mobile, this will show native options (gallery/file and camera)
+    // On desktop, this will show file picker
     fileInputRef.current?.click()
   }
 
@@ -86,13 +89,13 @@ export default function DashboardPage() {
   const processFile = (file: File) => {
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      alert('Please select an image file')
+      alert(t('dashboard.invalidFileError'))
       return
     }
 
     // Validate file size (max 10MB)
     if (file.size > 10 * 1024 * 1024) {
-      alert('File size must be less than 10MB')
+      alert(t('dashboard.fileSizeError'))
       return
     }
 
@@ -126,7 +129,7 @@ export default function DashboardPage() {
 
   const handleGenerateResults = async () => {
     if (!selectedFile) {
-      alert('Please select a file first')
+      alert(t('dashboard.pleaseSelectFile'))
       return
     }
 
@@ -152,12 +155,12 @@ export default function DashboardPage() {
       // Provide more specific error messages
       if (error instanceof Error) {
         if (error.message.includes('not authenticated')) {
-          alert('Please sign in to generate critiques.')
+          alert(t('dashboard.signinRequired'))
         } else {
-          alert('Failed to generate results. Please try again.')
+          alert(t('dashboard.generationFailed'))
         }
       } else {
-        alert('Failed to generate results. Please try again.')
+        alert(t('dashboard.generationFailed'))
       }
     } finally {
       setIsGenerating(false)
@@ -190,10 +193,10 @@ export default function DashboardPage() {
             {/* Page Header */}
             <div className="text-center mb-6 md:mb-8">
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
-                Hand Rating 👀
+                {t('dashboard.title')}
               </h1>
               <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-                Do you have what it takes to be a hand model? Let's find out.
+                {t('dashboard.subtitle')}
               </p>
             </div>
 
@@ -235,7 +238,7 @@ export default function DashboardPage() {
                         <div className="text-center">
                           <div className="text-4xl mb-4">📊</div>
                           <p className="text-gray-600 mb-6 text-sm sm:text-base">
-                            Ready to get your brutally honest rating?
+                            {t('dashboard.readyForRating')}
                           </p>
                           <Button
                             onClick={canUpload() ? handleGenerateResults : () => router.push('/offer')}
@@ -243,7 +246,7 @@ export default function DashboardPage() {
                             size="lg"
                             className="px-6 sm:px-8 py-3 text-sm sm:text-base touch-manipulation"
                           >
-                            {isGenerating ? 'Analyzing...' : 'Generate Results'}
+                            {isGenerating ? t('dashboard.analyzing') : t('dashboard.generateResults')}
                           </Button>
                         </div>
                       </div>
@@ -258,15 +261,8 @@ export default function DashboardPage() {
                   <div className="space-y-4">
                     <div className="text-6xl">📸</div>
                     <p className="text-text-gray text-lg max-w-2xl mx-auto">
-                      Upload a photo and get an honest rating. No sugarcoating.
+                      {t('dashboard.uploadDescription')}
                     </p>
-                    {isMobile && (
-                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-2xl mx-auto">
-                        <p className="text-blue-800 text-sm">
-                          <span className="font-semibold">📱 Mobile Tips:</span> Click "Upload Photo" to choose from your gallery or take a new photo with your camera. Make sure your hands are well-lit and clearly visible!
-                        </p>
-                      </div>
-                    )}
                   </div>
 
                   {/* Hidden File Input */}
@@ -274,6 +270,7 @@ export default function DashboardPage() {
                     ref={fileInputRef}
                     type="file"
                     accept="image/*"
+                    capture="environment"
                     onChange={handleFileSelect}
                     className="hidden"
                   />
@@ -310,14 +307,14 @@ export default function DashboardPage() {
                           <div className="text-3xl sm:text-4xl text-gray-400 mb-2">📷</div>
                           <p className="text-gray-500 text-sm sm:text-base mb-1 font-medium">
                             {isDragOver 
-                              ? 'Drop your photo here' 
-                              : 'Click to upload your hand photo'
+                              ? t('dashboard.dropPhoto')
+                              : t('dashboard.clickToUpload')
                             }
                           </p>
                           <p className="text-gray-400 text-xs sm:text-sm">
                             {isDragOver 
                               ? '' 
-                              : 'or drag & drop, or use the button below'
+                              : t('dashboard.dragDropOption')
                             }
                           </p>
                         </div>
@@ -334,7 +331,7 @@ export default function DashboardPage() {
                       className="w-full text-lg py-4 min-h-[56px] flex items-center justify-center gap-3 touch-manipulation"
                     >
                       <span className="text-xl">📁</span>
-                      <span>Upload Photo</span>
+                      <span>{t('dashboard.uploadPhoto')}</span>
                     </Button>
                   </div>
                 </div>
