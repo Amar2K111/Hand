@@ -6,7 +6,6 @@ import { Footer } from '@/components/layout/Footer'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { CritiqueResults } from '@/components/ui/CritiqueResults'
-import { Modal } from '@/components/ui/Modal'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
@@ -19,7 +18,6 @@ export default function DashboardPage() {
   const router = useRouter()
   const { t } = useLanguage()
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const cameraInputRef = useRef<HTMLInputElement>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [isUploading, setIsUploading] = useState(false)
@@ -27,54 +25,17 @@ export default function DashboardPage() {
   const [critique, setCritique] = useState<HandCritique | null>(null)
   const [isGenerating, setIsGenerating] = useState(false)
   const [isDragOver, setIsDragOver] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
-  const [showMobileUploadModal, setShowMobileUploadModal] = useState(false)
   const { uploadAndAnalyze } = useHandCritique()
   const { canUpload, hasAvailableCredits, refetchUploadsData } = useUploads()
 
-  // Enhanced mobile detection
-  React.useEffect(() => {
-    const checkMobile = () => {
-      const userAgent = navigator.userAgent
-      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
-      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-      const isSmallScreen = window.innerWidth <= 768
-      
-      // More accurate mobile detection
-      setIsMobile(isMobileDevice || (isTouchDevice && isSmallScreen))
-    }
-    
-    checkMobile()
-    
-    // Re-check on resize
-    const handleResize = () => {
-      checkMobile()
-    }
-    
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   // Note: Critiques are now loaded from Firebase via useUserCritiques hook
   // No need to load from localStorage as it has size limits with base64 images
 
   const handleUploadClick = () => {
-    if (isMobile) {
-      // On mobile, show modal with upload options
-      setShowMobileUploadModal(true)
-    } else {
-      // On desktop, show file picker
-      fileInputRef.current?.click()
-    }
-  }
-
-  const handleCameraUpload = () => {
-    setShowMobileUploadModal(false)
-    cameraInputRef.current?.click()
-  }
-
-  const handleGalleryUpload = () => {
-    setShowMobileUploadModal(false)
+    // Use the same file input for both mobile and desktop
+    // On mobile, this will show native options (camera, gallery, files)
+    // On desktop, this will show file picker
     fileInputRef.current?.click()
   }
 
@@ -262,19 +223,11 @@ export default function DashboardPage() {
                     </p>
                   </div>
 
-                  {/* Hidden File Inputs */}
+                  {/* Hidden File Input */}
                   <input
                     ref={fileInputRef}
                     type="file"
                     accept="image/*"
-                    onChange={handleFileSelect}
-                    className="hidden"
-                  />
-                  <input
-                    ref={cameraInputRef}
-                    type="file"
-                    accept="image/*"
-                    capture="environment"
                     onChange={handleFileSelect}
                     className="hidden"
                   />
@@ -350,47 +303,6 @@ export default function DashboardPage() {
         
 
         <Footer />
-
-        {/* Mobile Upload Options Modal */}
-        <Modal
-          isOpen={showMobileUploadModal}
-          onClose={() => setShowMobileUploadModal(false)}
-          className="max-w-sm"
-        >
-          <div className="bg-white rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
-              Choose Upload Method
-            </h3>
-            
-            <div className="space-y-3">
-              <Button
-                onClick={handleCameraUpload}
-                className="w-full py-4 text-lg flex items-center justify-center gap-3"
-                variant="primary"
-              >
-                <span className="text-xl">📷</span>
-                <span>Take Photo</span>
-              </Button>
-              
-              <Button
-                onClick={handleGalleryUpload}
-                className="w-full py-4 text-lg flex items-center justify-center gap-3"
-                variant="secondary"
-              >
-                <span className="text-xl">🖼️</span>
-                <span>Choose from Gallery</span>
-              </Button>
-            </div>
-            
-            <Button
-              onClick={() => setShowMobileUploadModal(false)}
-              className="w-full mt-4"
-              variant="secondary"
-            >
-              Cancel
-            </Button>
-          </div>
-        </Modal>
       </div>
     </ProtectedRoute>
   )
