@@ -385,7 +385,7 @@ export default function DashboardPage() {
             <Button
               onClick={() => setShowMobileUploadModal(false)}
               className="w-full mt-4"
-              variant="outline"
+              variant="secondary"
             >
               Cancel
             </Button>
