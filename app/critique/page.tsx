@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
-import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { CritiqueCard } from '@/components/ui/CritiqueCard'
 import { useHandCritique } from '@/hooks/useHandCritique'
@@ -63,7 +62,6 @@ export default function CritiquePage() {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <Navbar />
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
                          <p className="text-text-gray">No critique available</p>
@@ -83,7 +81,6 @@ export default function CritiquePage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <Navbar />
       
       <main className="flex-1 py-8 md:py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

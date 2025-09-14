@@ -2,9 +2,7 @@
 
 import React from 'react'
 import { Header } from '@/components/layout/Header'
-import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
-import { ProfileIcon } from '@/components/layout/ProfileIcon'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { GalleryCritiqueCard } from '@/components/ui/GalleryCritiqueCard'
@@ -32,11 +30,8 @@ export default function GalleryPage() {
   return (
     <ProtectedRoute>
       <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100">
-        {/* Profile Icon - Floating in top right */}
-        <ProfileIcon />
         
         <Header />
-        <Navbar />
       
       <main className="flex-1 py-12 px-4">
         <div className="max-w-7xl mx-auto">

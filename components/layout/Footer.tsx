@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
             Brutally honest hand critiques. No sugarcoating, just the truth.
           </p>
           <div className="text-text-gray text-xs opacity-70">
-            © 2024 {APP_NAME}. All rights reserved.
+            © 2025 {APP_NAME}. All rights reserved.
           </div>
         </div>
       </div>

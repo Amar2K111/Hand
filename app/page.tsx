@@ -4,7 +4,6 @@ import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
-import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/Button'
 import { ExampleGallery } from '@/components/shared/ExampleGallery'
@@ -54,7 +53,6 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <Navbar />
       
       <main className="flex-1">
         {/* Hero Section */}

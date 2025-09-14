@@ -2,14 +2,12 @@
 
 import React, { useState, useRef } from 'react'
 import { Header } from '@/components/layout/Header'
-import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { CritiqueResults } from '@/components/ui/CritiqueResults'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
-import { ProfileIcon } from '@/components/layout/ProfileIcon'
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 import { useHandCritique, HandCritique } from '@/hooks/useHandCritique'
 import { useUploads } from '@/hooks/useUploads'
@@ -64,20 +62,6 @@ export default function DashboardPage() {
     fileInputRef.current?.click()
   }
 
-  const handleCameraClick = () => {
-    // Create camera input for mobile
-    const cameraInput = document.createElement('input')
-    cameraInput.type = 'file'
-    cameraInput.accept = 'image/*'
-    cameraInput.capture = 'environment' // Use back camera
-    cameraInput.onchange = (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0]
-      if (file) {
-        processFile(file)
-      }
-    }
-    cameraInput.click()
-  }
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -181,11 +165,8 @@ export default function DashboardPage() {
   return (
     <ProtectedRoute>
       <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100">
-        {/* Profile Icon - Floating in top right */}
-        <ProfileIcon />
         
         <Header />
-        <Navbar />
         
         <main className="flex-1 py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -270,7 +251,6 @@ export default function DashboardPage() {
                     ref={fileInputRef}
                     type="file"
                     accept="image/*"
-                    capture="environment"
                     onChange={handleFileSelect}
                     className="hidden"
                   />

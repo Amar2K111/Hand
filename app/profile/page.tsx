@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react'
 import { Header } from '@/components/layout/Header'
-import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
@@ -73,7 +72,6 @@ export default function ProfilePage() {
     <ProtectedRoute>
       <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100">
         <Header />
-        <Navbar />
       
       <main className="flex-1 py-8 md:py-12 px-4">
         <div className="max-w-4xl mx-auto">

@@ -8,7 +8,7 @@ import OnboardingQuestions from '@/components/onboarding/OnboardingQuestions';
 import OnboardingContainer from '@/components/onboarding/OnboardingContainer';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
-import { ProfileIcon } from '@/components/layout/ProfileIcon';
+import { Header } from '@/components/layout/Header';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 
 interface OnboardingData {
@@ -224,25 +224,26 @@ export default function OnboardingPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 md:py-12 px-4">
-        {/* Profile Icon - Floating in top right */}
-        <ProfileIcon />
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100">
+        <Header />
+        
+        <div className="flex-1 py-4 sm:py-6 md:py-8 lg:py-12 px-4">
         
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-6 md:mb-8">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
+          <div className="text-center mb-4 sm:mb-6 md:mb-8">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4 px-2">
               Discover Your Hand Modeling Potential
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 px-4">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 px-4">
               Let's find out if you have what it takes to become a hand model
             </p>
           </div>
 
           {/* Progress Bar */}
-          <div className="mb-8">
-            <div className="flex justify-between mb-2">
-              <span className="text-sm text-gray-600">Step {currentStep} of 5</span>
-              <span className="text-sm text-gray-600">{getCompletionPercentage()}% Complete</span>
+          <div className="mb-6 sm:mb-8">
+            <div className="flex justify-between mb-2 text-xs sm:text-sm">
+              <span className="text-gray-600">Step {currentStep} of 5</span>
+              <span className="text-gray-600">{getCompletionPercentage()}% Complete</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div 
@@ -255,6 +256,7 @@ export default function OnboardingPage() {
           <OnboardingContainer>
             {renderStep()}
           </OnboardingContainer>
+        </div>
         </div>
       </div>
     </ProtectedRoute>

@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
-import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { Card } from '@/components/ui/Card'
 import { Input } from '@/components/ui/Input'
@@ -112,7 +111,6 @@ export default function SignUpPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <Navbar />
       
       <main className="flex-1 flex items-center justify-center py-12">
         <div className="w-full max-w-md">
