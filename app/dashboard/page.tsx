@@ -101,8 +101,7 @@ export default function DashboardPage() {
     }
 
     // Check if user has credits before proceeding
-    // Don't proceed if still loading or if no credits available
-    if (loading || !uploadsData || uploadsData.uploadsRemaining <= 0) {
+    if (!uploadsData || uploadsData.uploadsRemaining <= 0) {
       router.push('/offer')
       return
     }
@@ -211,17 +210,17 @@ export default function DashboardPage() {
                     ) : (
                       <div className="flex items-center justify-center h-full min-h-[200px]">
                         <div className="text-center">
-                          <div className="text-4xl mb-4">{(!loading && uploadsData && uploadsData.uploadsRemaining > 0) ? '📊' : '💳'}</div>
+                          <div className="text-4xl mb-4">📊</div>
                           <p className="text-gray-600 mb-6 text-sm sm:text-base">
-                            {(!loading && uploadsData && uploadsData.uploadsRemaining > 0) ? t('dashboard.readyForRating') : 'You need more credits to analyze your hand'}
+                            {t('dashboard.readyForRating')}
                           </p>
                           <Button
-                            onClick={(!loading && uploadsData && uploadsData.uploadsRemaining > 0) ? handleGenerateResults : () => router.push('/offer')}
+                            onClick={handleGenerateResults}
                             disabled={isGenerating}
                             size="lg"
                             className="px-6 sm:px-8 py-3 text-sm sm:text-base touch-manipulation"
                           >
-                            {isGenerating ? t('dashboard.analyzing') : ((!loading && uploadsData && uploadsData.uploadsRemaining > 0) ? t('dashboard.generateResults') : 'Buy Credits')}
+                            {isGenerating ? t('dashboard.analyzing') : t('dashboard.generateResults')}
                           </Button>
                         </div>
                       </div>
