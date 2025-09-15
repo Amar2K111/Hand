@@ -12,6 +12,7 @@ import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 import { useHandCritique, HandCritique } from '@/hooks/useHandCritique'
 import { useUploads } from '@/hooks/useUploads'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { useToast } from '@/components/ui/Toast'
 
 export default function DashboardPage() {
   const { user } = useAuth()
@@ -28,6 +29,7 @@ export default function DashboardPage() {
   const [isDragOver, setIsDragOver] = useState(false)
   const { uploadAndAnalyze } = useHandCritique()
   const { canUpload, hasAvailableCredits, refetchUploadsData, uploadsData, loading } = useUploads()
+  const { addToast } = useToast()
 
 
   // Note: Critiques are now loaded from Firebase via useUserCritiques hook
@@ -105,7 +107,7 @@ export default function DashboardPage() {
     console.log('Dashboard credit check - uploadsRemaining:', uploadsData?.uploadsRemaining)
     if (!uploadsData || uploadsData.uploadsRemaining <= 0) {
       console.log('Dashboard: No credits, redirecting to offer')
-      alert('Dashboard: No credits remaining! Redirecting to offer page.')
+      addToast('No credits remaining! Redirecting to offer page.', 'error')
       router.push('/offer')
       return
     }

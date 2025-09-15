@@ -6,6 +6,7 @@ import { useUploads } from '@/hooks/useUploads'
 import { convertFileToBase64 } from '@/lib/gemini'
 import { doc, setDoc, collection, addDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { useToast } from '@/components/ui/Toast'
 
 export interface HandCritique {
   id: string
@@ -22,6 +23,7 @@ export interface HandCritique {
 export const useHandCritique = () => {
   const { user } = useAuth()
   const { decrementUploads, uploadsData } = useUploads()
+  const { addToast } = useToast()
   const [isUploading, setIsUploading] = useState(false)
   const [currentCritique, setCurrentCritique] = useState<HandCritique | null>(null)
 
@@ -38,7 +40,7 @@ export const useHandCritique = () => {
     // Double check credits before calling decrementUploads
     if (!uploadsData || uploadsData.uploadsRemaining <= 0) {
       console.log('No credits available, throwing error immediately')
-      alert('No credits remaining! You should be redirected to the offer page.')
+      addToast('No credits remaining! Redirecting to offer page.', 'error')
       throw new Error('No credits remaining. Please purchase more credits to continue.')
     }
     
