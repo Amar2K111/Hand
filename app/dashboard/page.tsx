@@ -12,6 +12,9 @@ import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 import { useHandCritique, HandCritique } from '@/hooks/useHandCritique'
 import { useUploads } from '@/hooks/useUploads'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { UploadDebugger } from '@/components/debug/UploadDebugger'
+import { PaymentDebugger } from '@/components/debug/PaymentDebugger'
+import { WebhookTester } from '@/components/debug/WebhookTester'
 
 export default function DashboardPage() {
   const { user } = useAuth()
@@ -163,6 +166,11 @@ export default function DashboardPage() {
                 {t('dashboard.subtitle')}
               </p>
             </div>
+
+            {/* Debug Components for Test Mode */}
+            <UploadDebugger />
+            <PaymentDebugger />
+            <WebhookTester />
 
             {/* Upload Section */}
             {isUploaded ? (
