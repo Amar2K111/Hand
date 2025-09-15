@@ -30,9 +30,12 @@ export const useHandCritique = () => {
       throw new Error('User not authenticated')
     }
 
-    // Check if user has credits before proceeding
+    // Check if user has credits before proceeding - be extra strict
+    console.log('About to check credits in uploadAndAnalyze')
     const hasCredits = await decrementUploads()
+    console.log('decrementUploads returned:', hasCredits)
     if (!hasCredits) {
+      console.log('No credits remaining, throwing error')
       throw new Error('No credits remaining. Please purchase more credits to continue.')
     }
 

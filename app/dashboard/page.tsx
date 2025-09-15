@@ -100,11 +100,15 @@ export default function DashboardPage() {
       return
     }
 
-    // Check if user has credits before proceeding
+    // Check if user has credits before proceeding - ALWAYS redirect if 0 credits
+    console.log('Dashboard credit check - uploadsData:', uploadsData)
+    console.log('Dashboard credit check - uploadsRemaining:', uploadsData?.uploadsRemaining)
     if (!uploadsData || uploadsData.uploadsRemaining <= 0) {
+      console.log('Dashboard: No credits, redirecting to offer')
       router.push('/offer')
       return
     }
+    console.log('Dashboard: Has credits, proceeding with analysis')
 
     setIsGenerating(true)
     try {
