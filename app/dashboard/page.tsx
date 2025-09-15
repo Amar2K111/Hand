@@ -27,7 +27,7 @@ export default function DashboardPage() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [isDragOver, setIsDragOver] = useState(false)
   const { uploadAndAnalyze } = useHandCritique()
-  const { canUpload, hasAvailableCredits, refetchUploadsData } = useUploads()
+  const { canUpload, hasAvailableCredits, refetchUploadsData, uploadsData, loading } = useUploads()
 
 
   // Note: Critiques are now loaded from Firebase via useUserCritiques hook
@@ -101,7 +101,8 @@ export default function DashboardPage() {
     }
 
     // Check if user has credits before proceeding
-    if (!hasAvailableCredits()) {
+    // Don't proceed if still loading or if no credits available
+    if (loading || !uploadsData || uploadsData.uploadsRemaining <= 0) {
       router.push('/offer')
       return
     }
@@ -210,17 +211,17 @@ export default function DashboardPage() {
                     ) : (
                       <div className="flex items-center justify-center h-full min-h-[200px]">
                         <div className="text-center">
-                          <div className="text-4xl mb-4">{hasAvailableCredits() ? '📊' : '💳'}</div>
+                          <div className="text-4xl mb-4">{(!loading && uploadsData && uploadsData.uploadsRemaining > 0) ? '📊' : '💳'}</div>
                           <p className="text-gray-600 mb-6 text-sm sm:text-base">
-                            {hasAvailableCredits() ? t('dashboard.readyForRating') : 'You need more credits to analyze your hand'}
+                            {(!loading && uploadsData && uploadsData.uploadsRemaining > 0) ? t('dashboard.readyForRating') : 'You need more credits to analyze your hand'}
                           </p>
                           <Button
-                            onClick={hasAvailableCredits() ? handleGenerateResults : () => router.push('/offer')}
+                            onClick={(!loading && uploadsData && uploadsData.uploadsRemaining > 0) ? handleGenerateResults : () => router.push('/offer')}
                             disabled={isGenerating}
                             size="lg"
                             className="px-6 sm:px-8 py-3 text-sm sm:text-base touch-manipulation"
                           >
-                            {isGenerating ? t('dashboard.analyzing') : (hasAvailableCredits() ? t('dashboard.generateResults') : 'Buy Credits')}
+                            {isGenerating ? t('dashboard.analyzing') : ((!loading && uploadsData && uploadsData.uploadsRemaining > 0) ? t('dashboard.generateResults') : 'Buy Credits')}
                           </Button>
                         </div>
                       </div>
