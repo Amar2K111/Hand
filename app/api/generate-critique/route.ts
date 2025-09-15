@@ -27,10 +27,18 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('API Key available:', !!process.env.GEMINI_API_KEY)
+    console.log('API Key length:', process.env.GEMINI_API_KEY?.length || 0)
+    
     const { imageBase64, language = 'en' } = await request.json()
 
     if (!imageBase64) {
       return NextResponse.json({ error: 'No image provided' }, { status: 400 })
+    }
+
+    if (!process.env.GEMINI_API_KEY) {
+      console.error('GEMINI_API_KEY environment variable is not set')
+      return NextResponse.json({ error: 'API key not configured' }, { status: 500 })
     }
 
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
