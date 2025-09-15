@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useUploads } from '@/hooks/useUploads'
-import { generateHandCritique, convertFileToBase64 } from '@/lib/gemini'
+import { convertFileToBase64 } from '@/lib/gemini'
 import { doc, setDoc, collection, addDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 
@@ -42,9 +42,25 @@ export const useHandCritique = () => {
       // Convert image to base64
       const imageBase64 = await convertFileToBase64(file)
 
-      // Generate critique using Gemini with user's cloud-stored language
+      // Generate critique using server-side API with user's cloud-stored language
       const userLanguage = user.language || 'en'
-      const critiqueData = await generateHandCritique(imageBase64, userLanguage)
+      
+      const response = await fetch('/api/generate-critique', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          imageBase64,
+          language: userLanguage
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to generate critique')
+      }
+
+      const critiqueData = await response.json()
 
       // Create critique object
       const critique: HandCritique = {
