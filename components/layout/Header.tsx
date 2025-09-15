@@ -61,27 +61,11 @@ export const Header: React.FC = () => {
             </span>
             </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              {isDashboardPage && (
-                <>
-                  <Link href="/dashboard" className="text-text-gray hover:text-neon-blue transition-colors duration-200">
-                    {t('navbar.dashboard')}
-                  </Link>
-                  <Link href="/gallery" className="text-text-gray hover:text-neon-blue transition-colors duration-200">
-                    {t('navbar.gallery')}
-                  </Link>
-                  <Link href="/offer" className="text-text-gray hover:text-neon-blue transition-colors duration-200">
-                    {t('navbar.getCredits')}
-                  </Link>
-                </>
-              )}
-            </nav>
 
           {/* Right side - Auth buttons, language toggle, mobile menu */}
           <div className="flex items-center space-x-2 md:space-x-4">
-            {/* Language Toggle - Hidden on onboarding page */}
-            {!isOnboardingPage && (
+            {/* Language Toggle - Hidden on onboarding and dashboard pages */}
+            {!isOnboardingPage && !isDashboardPage && (
               <div className="mr-2 md:mr-4">
                 <LanguageToggle />
               </div>

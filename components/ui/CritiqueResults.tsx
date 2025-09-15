@@ -93,10 +93,10 @@ export const CritiqueResults: React.FC<CritiqueResultsProps> = ({
                    // Add bold and colors to important words
                    let formattedSentence = sentence.trim();
                    
-                   // Make YES/NO very dark and prominent
+                   // Make YES/NO very dark and prominent (handle multiple languages)
                    formattedSentence = formattedSentence
-                     .replace(/\b(YES, you can become a hand model|NO, you cannot become a hand model)\b/gi, '<span class="font-black text-black text-base">$1</span>')
-                     .replace(/\b(YES|NO)\b/gi, '<span class="font-black text-black text-base">$1</span>')
+                     .replace(/\b(YES, you can become a hand model|NO, you cannot become a hand model|SÍ, puedes convertirte en modelo de manos|NO, no puedes convertirte en modelo de manos|OUI, vous pouvez devenir mannequin de mains|NON, vous ne pouvez pas devenir mannequin de mains)\b/gi, '<span class="font-black text-black text-base">$1</span>')
+                     .replace(/\b(YES|NO|SÍ|OUI|NON)\b/gi, '<span class="font-black text-black text-base">$1</span>')
                      .replace(/\b(hand model|hand modeling|professional|excellent|outstanding|perfect|amazing|beautiful|stunning)\b/gi, '<span class="font-bold text-green-700">$1</span>')
                      .replace(/\b(poor|terrible|awful|bad|horrible|disappointing|weak|inadequate)\b/gi, '<span class="font-bold text-red-600">$1</span>')
                      .replace(/\b(good|decent|average|okay|acceptable|fine|solid)\b/gi, '<span class="font-bold text-blue-600">$1</span>')

@@ -1,6 +1,26 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { getCritiqueMessage } from './critiqueMessages'
 
+// Translation helper for YES/NO messages
+const getYesNoMessage = (isYes: boolean, language: 'en' | 'es' | 'fr'): string => {
+  const messages = {
+    en: {
+      yes: 'YES, you can become a hand model',
+      no: 'NO, you cannot become a hand model'
+    },
+    es: {
+      yes: 'SÍ, puedes convertirte en modelo de manos',
+      no: 'NO, no puedes convertirte en modelo de manos'
+    },
+    fr: {
+      yes: 'OUI, vous pouvez devenir mannequin de mains',
+      no: 'NON, vous ne pouvez pas devenir mannequin de mains'
+    }
+  }
+  
+  return isYes ? messages[language].yes : messages[language].no
+}
+
 // Initialize Gemini AI
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY || '')
 
@@ -140,7 +160,7 @@ Fournissez une critique complète avec plusieurs phrases détaillées. Gardez le
           
           // Force our score-based YES/NO decision
           let critique = parsed.critique || 'Analysis completed'
-          const yesNo = isYes ? 'YES, you can become a hand model' : 'NO, you cannot become a hand model'
+          const yesNo = getYesNoMessage(isYes, language)
           
           console.log('Original critique:', critique)
           
@@ -168,7 +188,7 @@ Fournissez une critique complète avec plusieurs phrases détaillées. Gardez le
       
       // Force our score-based YES/NO decision
       let critique = parsed.critique || 'Analysis completed'
-      const yesNo = isYes ? 'YES, you can become a hand model' : 'NO, you cannot become a hand model'
+      const yesNo = getYesNoMessage(isYes, language)
       
       // Remove any existing YES/NO from the critique and add our own
       critique = critique.replace(/^(YES|NO)[\s\-,:]*/i, '').trim()

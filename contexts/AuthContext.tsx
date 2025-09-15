@@ -53,53 +53,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // Check if user has completed onboarding from cloud database
         try {
           const userDoc = await getDoc(doc(db, 'users', user.uid))
           if (!userDoc.exists()) {
+            // Create user document for new users
+            await setDoc(doc(db, 'users', user.uid), {
+              email: user.email,
+              displayName: user.displayName,
+              photoURL: user.photoURL,
+              createdAt: new Date(),
+              onboardingCompleted: false,
+              provider: user.providerData[0]?.providerId || 'email',
+              onboardingData: null,
+              totalUploads: 0,
+              uploadsRemaining: 0,
+              language: 'en'
+            })
+            
             setIsNewUser(true)
             setOnboardingData(null)
-            // Set user with default values when document doesn't exist
             setUser({
               ...user,
               totalUploads: 0,
+              uploadsRemaining: 0,
               language: 'en'
             } as User & UserData)
           } else {
-            // Check if onboarding is completed from cloud data
             const userData = userDoc.data()
             setIsNewUser(!userData?.onboardingCompleted)
             setOnboardingData(userData?.onboardingData || null)
-            
-            // Check if totalUploads field is missing and add it if needed (only for new users)
-            if (userData?.totalUploads === undefined) {
-              try {
-                await setDoc(doc(db, 'users', user.uid), {
-                  totalUploads: 0
-                }, { merge: true })
-                
-                // Update userData with the new field
-                userData.totalUploads = 0
-                console.log('Added default totalUploads field for new user')
-              } catch (error) {
-                console.error('Error adding missing totalUploads field:', error)
-              }
-            }
-            
-            // Check if uploadsRemaining field is missing and add it if needed
-            if (userData?.uploadsRemaining === undefined) {
-              try {
-                await setDoc(doc(db, 'users', user.uid), {
-                  uploadsRemaining: 0
-                }, { merge: true })
-                
-                // Update userData with the new field
-                userData.uploadsRemaining = 0
-                console.log('Added default uploadsRemaining field for user')
-              } catch (error) {
-                console.error('Error adding missing uploadsRemaining field:', error)
-              }
-            }
             
             // Merge Firebase Auth user with Firestore user data
             const mergedUser = {
@@ -116,7 +98,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           console.error('Error checking user document:', error)
           setIsNewUser(true)
           setOnboardingData(null)
-          // Set user with default values on error (only for new users)
           setUser({
             ...user,
             totalUploads: 0,
@@ -137,39 +118,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signIn = async (email: string, password: string) => {
     try {
-      const result = await signInWithEmailAndPassword(auth, email, password)
-      // Check if user has completed onboarding from cloud database
-      const userDoc = await getDoc(doc(db, 'users', result.user.uid))
-      if (!userDoc.exists()) {
-        setIsNewUser(true)
-        setOnboardingData(null)
-      } else {
-        const userData = userDoc.data()
-        setIsNewUser(!userData.onboardingCompleted)
-        setOnboardingData(userData.onboardingData || null)
-        
-        // Check if totalUploads field is missing and add it if needed
-        if (userData?.totalUploads === undefined) {
-          try {
-            await setDoc(doc(db, 'users', result.user.uid), {
-              totalUploads: 0
-            }, { merge: true })
-          } catch (error) {
-            console.error('Error adding missing totalUploads field during sign in:', error)
-          }
-        }
-        
-        // Check if uploadsRemaining field is missing and add it if needed
-        if (userData?.uploadsRemaining === undefined) {
-          try {
-            await setDoc(doc(db, 'users', result.user.uid), {
-              uploadsRemaining: 0
-            }, { merge: true })
-          } catch (error) {
-            console.error('Error adding missing uploadsRemaining field during sign in:', error)
-          }
-        }
-      }
+      await signInWithEmailAndPassword(auth, email, password)
+      // User data will be loaded by onAuthStateChanged listener
     } catch (error) {
       throw error
     }
@@ -177,18 +127,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUp = async (email: string, password: string) => {
     try {
-      const result = await createUserWithEmailAndPassword(auth, email, password)
-      // Create user document
-      await setDoc(doc(db, 'users', result.user.uid), {
-        email: result.user.email,
-        createdAt: new Date(),
-        onboardingCompleted: false,
-        onboardingData: null,
-        totalUploads: 0,
-        uploadsRemaining: 0
-      })
-      setIsNewUser(true)
-      setOnboardingData(null)
+      await createUserWithEmailAndPassword(auth, email, password)
+      // User document will be created by onAuthStateChanged listener
     } catch (error) {
       throw error
     }
@@ -196,40 +136,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithGoogle = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider)
-      // Check if user has completed onboarding from cloud database
-      const userDoc = await getDoc(doc(db, 'users', result.user.uid))
-      if (!userDoc.exists()) {
-        // Create user document for new Google users
-        await setDoc(doc(db, 'users', result.user.uid), {
-          email: result.user.email,
-          displayName: result.user.displayName,
-          photoURL: result.user.photoURL,
-          createdAt: new Date(),
-          onboardingCompleted: false,
-          provider: 'google',
-          onboardingData: null,
-          totalUploads: 0,
-          uploadsRemaining: 0
-        })
-        setIsNewUser(true)
-        setOnboardingData(null)
-      } else {
-        const userData = userDoc.data()
-        setIsNewUser(!userData.onboardingCompleted)
-        setOnboardingData(userData.onboardingData || null)
-        
-        // Check if totalUploads field is missing and add it if needed
-        if (userData?.totalUploads === undefined) {
-          try {
-            await setDoc(doc(db, 'users', result.user.uid), {
-              totalUploads: 0
-            }, { merge: true })
-          } catch (error) {
-            console.error('Error adding missing totalUploads field during Google sign in:', error)
-          }
-        }
-      }
+      await signInWithPopup(auth, googleProvider)
+      // User data will be loaded by onAuthStateChanged listener
     } catch (error) {
       throw error
     }

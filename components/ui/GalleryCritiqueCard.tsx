@@ -5,6 +5,7 @@ import { Card } from './Card'
 import { Button } from './Button'
 import { HandCritique } from '@/hooks/useHandCritique'
 import { GalleryAnalysisModal } from './GalleryAnalysisModal'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface GalleryCritiqueCardProps {
   critique: HandCritique
@@ -16,6 +17,7 @@ export const GalleryCritiqueCard: React.FC<GalleryCritiqueCardProps> = ({
   className
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { t, language } = useLanguage()
   
 
   const getScoreColor = (score: number) => {
@@ -62,7 +64,10 @@ export const GalleryCritiqueCard: React.FC<GalleryCritiqueCardProps> = ({
         return 'Recent'
       }
       
-      return new Intl.DateTimeFormat('en-US', {
+      // Use language-specific locale for date formatting
+      const locale = language === 'es' ? 'es-ES' : language === 'fr' ? 'fr-FR' : 'en-US'
+      
+      return new Intl.DateTimeFormat(locale, {
         month: 'short',
         day: 'numeric',
         year: 'numeric',
@@ -98,7 +103,7 @@ export const GalleryCritiqueCard: React.FC<GalleryCritiqueCardProps> = ({
             <div className="w-full h-full flex items-center justify-center">
               <div className="text-center">
                 <div className="text-4xl mb-2">📷</div>
-                <p className="text-sm text-gray-500">No image</p>
+                <p className="text-sm text-gray-500">{t('gallery.noImage')}</p>
               </div>
             </div>
           )}
@@ -124,11 +129,11 @@ export const GalleryCritiqueCard: React.FC<GalleryCritiqueCardProps> = ({
           <div className="grid grid-cols-2 gap-2 mb-3 text-sm">
             <div className="text-center p-2 bg-green-50 rounded">
               <div className="font-semibold text-green-800">{critique.strengths?.length || 0}</div>
-              <div className="text-green-600">Strengths</div>
+              <div className="text-green-600">{t('gallery.strengths')}</div>
             </div>
             <div className="text-center p-2 bg-red-50 rounded">
               <div className="font-semibold text-red-800">{critique.improvements?.length || 0}</div>
-              <div className="text-red-600">Areas to Improve</div>
+              <div className="text-red-600">{t('gallery.areasToImprove')}</div>
             </div>
           </div>
 
@@ -144,7 +149,7 @@ export const GalleryCritiqueCard: React.FC<GalleryCritiqueCardProps> = ({
             size="sm"
             className="w-full"
           >
-            View Full Analysis
+            {t('gallery.viewFullAnalysis')}
           </Button>
         </div>
       </Card>

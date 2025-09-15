@@ -4,6 +4,7 @@ import React from 'react'
 import { Card } from './Card'
 import { Button } from './Button'
 import { HandCritique } from '@/hooks/useHandCritique'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface GalleryAnalysisModalProps {
   critique: HandCritique
@@ -16,6 +17,8 @@ export const GalleryAnalysisModal: React.FC<GalleryAnalysisModalProps> = ({
   isOpen,
   onClose
 }) => {
+  const { t } = useLanguage()
+  
   if (!isOpen) return null
 
   const getScoreColor = (score: number) => {
@@ -45,7 +48,7 @@ export const GalleryAnalysisModal: React.FC<GalleryAnalysisModalProps> = ({
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
         {/* Header with Close Button */}
         <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="text-xl font-bold text-gray-900">Full Analysis</h2>
+          <h2 className="text-xl font-bold text-gray-900">{t('gallery.fullAnalysis')}</h2>
           <Button
             onClick={onClose}
             variant="secondary"
@@ -71,7 +74,7 @@ export const GalleryAnalysisModal: React.FC<GalleryAnalysisModalProps> = ({
                 <div className="w-full h-full flex items-center justify-center bg-gray-100 rounded-lg">
                   <div className="text-center">
                     <div className="text-6xl mb-4">📷</div>
-                    <p className="text-gray-500">No image available</p>
+                    <p className="text-gray-500">{t('gallery.noImageAvailable')}</p>
                   </div>
                 </div>
               )}
@@ -87,7 +90,7 @@ export const GalleryAnalysisModal: React.FC<GalleryAnalysisModalProps> = ({
                   <div className={`text-6xl font-black ${getScoreColor(critique.score)} mb-2 drop-shadow-lg`}>
                     {critique.score}
                   </div>
-                  <div className="text-lg text-gray-600 mb-3">out of 100</div>
+                  <div className="text-lg text-gray-600 mb-3">{t('gallery.outOf')}</div>
                   <div className={`text-xl font-bold ${getVerdictColor(critique.verdict)}`}>
                     {critique.verdict} {critique.verdict.includes('Hand Model Material') || critique.verdict.includes('Fire') || critique.verdict.includes('Slay') ? '✨' : critique.score < 50 ? '🥀' : ''}
                   </div>
@@ -99,7 +102,7 @@ export const GalleryAnalysisModal: React.FC<GalleryAnalysisModalProps> = ({
                 <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-4 rounded-lg border border-gray-200">
                   {/* Analysis */}
                   <div className="mb-4">
-                    <h3 className="text-sm font-bold text-gray-800 mb-2">📝 Analysis</h3>
+                    <h3 className="text-sm font-bold text-gray-800 mb-2">📝 {t('gallery.analysis')}</h3>
                     <div className="text-sm text-gray-800">
                       {critique.critique}
                     </div>
@@ -107,7 +110,7 @@ export const GalleryAnalysisModal: React.FC<GalleryAnalysisModalProps> = ({
 
                   {/* Strengths */}
                   <div className="mb-4">
-                    <h3 className="text-sm font-bold text-green-800 mb-2">✨ Strengths</h3>
+                    <h3 className="text-sm font-bold text-green-800 mb-2">✨ {t('gallery.strengths')}</h3>
                     <ul className="space-y-1">
                       {critique.strengths && critique.strengths.length > 0 ? (
                         critique.strengths.map((strength, index) => (
@@ -117,14 +120,14 @@ export const GalleryAnalysisModal: React.FC<GalleryAnalysisModalProps> = ({
                           </li>
                         ))
                       ) : (
-                        <li className="text-sm text-gray-500 italic">No strengths identified</li>
+                        <li className="text-sm text-gray-500 italic">{t('gallery.noStrengths')}</li>
                       )}
                     </ul>
                   </div>
 
                   {/* Weaknesses */}
                   <div>
-                    <h3 className="text-sm font-bold text-red-800 mb-2">⚠️ Weaknesses</h3>
+                    <h3 className="text-sm font-bold text-red-800 mb-2">⚠️ {t('gallery.weaknesses')}</h3>
                     <ul className="space-y-1">
                       {critique.improvements && critique.improvements.length > 0 ? (
                         critique.improvements.map((weakness, index) => (
@@ -134,7 +137,7 @@ export const GalleryAnalysisModal: React.FC<GalleryAnalysisModalProps> = ({
                           </li>
                         ))
                       ) : (
-                        <li className="text-sm text-gray-500 italic">No weaknesses identified</li>
+                        <li className="text-sm text-gray-500 italic">{t('gallery.noWeaknesses')}</li>
                       )}
                     </ul>
                   </div>
