@@ -37,6 +37,9 @@ export async function POST(request: NextRequest) {
     const userId = session.metadata?.user_id
     const customerEmail = session.customer_details?.email
     
+    // Get credits amount from metadata
+    const creditsAmount = parseInt(session.metadata?.credits_amount || CREDITS_PACKAGE.amount.toString())
+    
     try {
       console.log('Processing checkout.session.completed event')
       console.log('Session ID:', session.id)
@@ -54,9 +57,6 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'No user identifier' }, { status: 400 })
       }
 
-      // Get credits amount from metadata
-      const creditsAmount = parseInt(session.metadata?.credits_amount || CREDITS_PACKAGE.amount.toString())
-      
       console.log('Processing payment for session:', session.id)
       console.log('User ID:', userId)
       console.log('Customer email:', customerEmail)
