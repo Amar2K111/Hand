@@ -21,7 +21,7 @@ export interface HandCritique {
 
 export const useHandCritique = () => {
   const { user } = useAuth()
-  const { decrementUploads } = useUploads()
+  const { decrementUploads, uploadsData } = useUploads()
   const [isUploading, setIsUploading] = useState(false)
   const [currentCritique, setCurrentCritique] = useState<HandCritique | null>(null)
 
@@ -32,12 +32,23 @@ export const useHandCritique = () => {
 
     // Check if user has credits before proceeding - be extra strict
     console.log('About to check credits in uploadAndAnalyze')
+    console.log('Current uploadsData:', uploadsData)
+    console.log('Current uploadsRemaining:', uploadsData?.uploadsRemaining)
+    
+    // Double check credits before calling decrementUploads
+    if (!uploadsData || uploadsData.uploadsRemaining <= 0) {
+      console.log('No credits available, throwing error immediately')
+      throw new Error('No credits remaining. Please purchase more credits to continue.')
+    }
+    
     const hasCredits = await decrementUploads()
     console.log('decrementUploads returned:', hasCredits)
     if (!hasCredits) {
       console.log('No credits remaining, throwing error')
       throw new Error('No credits remaining. Please purchase more credits to continue.')
     }
+
+    console.log('Credits check passed, proceeding with analysis')
 
     setIsUploading(true)
 
