@@ -19,6 +19,13 @@ function OfferContent() {
   const [isLoading, setIsLoading] = useState(false)
 
   const handlePayment = async () => {
+    // Check if user is authenticated
+    if (!user) {
+      alert('Please sign in to purchase credits.')
+      router.push('/auth/signin')
+      return
+    }
+
     setIsLoading(true)
     
     try {
@@ -31,6 +38,7 @@ function OfferContent() {
         body: JSON.stringify({
           success_url: `${window.location.origin}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${window.location.origin}/offer`,
+          user_id: user?.uid || '',
         }),
       })
 

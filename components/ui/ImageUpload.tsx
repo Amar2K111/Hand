@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react'
 import { Button } from './Button'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface ImageUploadProps {
   onImageSelect: (file: File) => void
@@ -17,6 +18,8 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   const [dragActive, setDragActive] = useState(false)
   const [preview, setPreview] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const cameraInputRef = useRef<HTMLInputElement>(null)
+  const { t } = useLanguage()
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault()
@@ -71,17 +74,34 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
     fileInputRef.current?.click()
   }
 
+  const openCamera = () => {
+    cameraInputRef.current?.click()
+  }
+
   const removeImage = () => {
     setPreview(null)
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
+    if (cameraInputRef.current) {
+      cameraInputRef.current.value = ''
+    }
   }
 
   return (
     <div className={`w-full ${className}`}>
+      {/* Regular file input for gallery selection */}
       <input
         ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileInput}
+        className="hidden"
+      />
+      
+      {/* Camera input for taking pictures */}
+      <input
+        ref={cameraInputRef}
         type="file"
         accept="image/*"
         capture="environment"
@@ -90,28 +110,44 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
       />
 
       {!preview ? (
-        <div
-          className={`w-full h-64 border-2 border-dashed rounded-lg flex items-center justify-center transition-colors ${
-            dragActive
-              ? 'border-blue-400 bg-blue-50'
-              : 'border-gray-300 bg-gray-50 hover:border-gray-400'
-          } ${isUploading ? 'opacity-50 pointer-events-none' : 'cursor-pointer'}`}
-          onDragEnter={handleDrag}
-          onDragLeave={handleDrag}
-          onDragOver={handleDrag}
-          onDrop={handleDrop}
-          onClick={openFileDialog}
-        >
-          <div className="text-center">
-            <div className="text-4xl text-gray-400 mb-2">📷</div>
-            <p className="text-gray-500 text-sm mb-2">
-              {dragActive ? 'Drop your image here' : 'Click to upload or drag and drop'}
-            </p>
-            <p className="text-gray-400 text-xs">
-              PNG, JPG, GIF up to 10MB
-            </p>
+        <>
+          {/* Mobile Take Picture Button - Only visible on mobile */}
+          <div className="block md:hidden mb-4">
+            <Button
+              onClick={openCamera}
+              variant="secondary"
+              size="lg"
+              className="w-full"
+              disabled={isUploading}
+            >
+              📸 {t('upload.takePicture')}
+            </Button>
           </div>
-        </div>
+          
+          {/* Upload Area */}
+          <div
+            className={`w-full h-64 border-2 border-dashed rounded-lg flex items-center justify-center transition-colors ${
+              dragActive
+                ? 'border-blue-400 bg-blue-50'
+                : 'border-gray-300 bg-gray-50 hover:border-gray-400'
+            } ${isUploading ? 'opacity-50 pointer-events-none' : 'cursor-pointer'}`}
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDrag}
+            onDrop={handleDrop}
+            onClick={openFileDialog}
+          >
+            <div className="text-center">
+              <div className="text-4xl text-gray-400 mb-2">📷</div>
+              <p className="text-gray-500 text-sm mb-2">
+                {dragActive ? 'Drop your image here' : 'Click to upload or drag and drop'}
+              </p>
+              <p className="text-gray-400 text-xs">
+                PNG, JPG, GIF up to 10MB
+              </p>
+            </div>
+          </div>
+        </>
       ) : (
         <div className="relative">
           <img

@@ -12,7 +12,7 @@ function PaymentSuccessContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { user } = useAuth()
-  const { addUploads } = useUploads()
+  const { refetchUploadsData } = useUploads()
   const [isProcessing, setIsProcessing] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const hasProcessedPayment = useRef(false)
@@ -23,22 +23,23 @@ function PaymentSuccessContent() {
     if (sessionId && user && !hasProcessedPayment.current) {
       hasProcessedPayment.current = true
       
-      // Simulate processing the payment
+      // Simulate processing time for webhook to complete
       setTimeout(async () => {
         try {
-          // Add credits to user's account using useUploads hook
-          await addUploads(CREDITS_PACKAGE.amount)
+          // Refresh user data to get updated credits from webhook
+          await refetchUploadsData()
           setIsProcessing(false)
         } catch (err) {
-          setError('Failed to process payment. Please contact support.')
+          console.error('Error refreshing payment status:', err)
+          setError('Payment was successful, but there was an issue refreshing your credits. Please check your dashboard or contact support if credits are missing.')
           setIsProcessing(false)
         }
-      }, 2000)
+      }, 3000) // Give webhook time to process
     } else if (!sessionId) {
       setError('No payment session found.')
       setIsProcessing(false)
     }
-  }, [searchParams, user, addUploads])
+  }, [searchParams, user, refetchUploadsData])
 
   if (isProcessing) {
     return (
@@ -50,7 +51,7 @@ function PaymentSuccessContent() {
               Processing Your Payment
             </h2>
             <p className="text-gray-600">
-              Please wait while we confirm your purchase and add your credits...
+              Please wait while we confirm your purchase and process your credits...
             </p>
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-neon-blue mx-auto"></div>
           </div>
@@ -92,12 +93,14 @@ function PaymentSuccessContent() {
             Payment Successful!
           </h2>
           <p className="text-gray-600">
-            Your payment has been processed successfully. You now have{' '}
-            <span className="font-bold text-neon-blue">{CREDITS_PACKAGE.amount} upload credits</span>!
+            Your payment has been processed successfully! Your credits have been added to your account.
           </p>
           <div className="bg-green-50 border border-green-200 rounded-lg p-4">
             <p className="text-green-800 text-sm">
-              ✅ {CREDITS_PACKAGE.amount} credits added to your account
+              ✅ {CREDITS_PACKAGE.amount} credits have been added to your account
+            </p>
+            <p className="text-green-700 text-xs mt-1">
+              Credits are processed securely via webhook and may take a few moments to appear.
             </p>
           </div>
           <div className="space-y-3">

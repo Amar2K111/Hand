@@ -18,8 +18,8 @@ export async function POST(request: NextRequest) {
     console.log('Stripe secret key starts with:', process.env.STRIPE_SECRET_KEY?.substring(0, 10))
     console.log('Base URL:', process.env.NEXT_PUBLIC_BASE_URL)
     
-    const { success_url, cancel_url } = await request.json()
-    console.log('Request body:', { success_url, cancel_url })
+    const { success_url, cancel_url, user_id } = await request.json()
+    console.log('Request body:', { success_url, cancel_url, user_id })
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
       cancel_url: cancel_url || `${process.env.NEXT_PUBLIC_BASE_URL}/offer`,
       metadata: {
         credits_amount: CREDITS_PACKAGE.amount.toString(),
+        user_id: user_id || '',
       },
     })
 

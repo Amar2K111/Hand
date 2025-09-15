@@ -165,6 +165,7 @@ const translations = {
     'gallery.noStrengths': 'No strengths identified',
     'gallery.noWeaknesses': 'No weaknesses identified',
     'gallery.noImageAvailable': 'No image available',
+    'upload.takePicture': 'Take Picture',
   },
   es: {
     'app.title': 'Hand - ¿Te contrataría una agencia de modelos para tus manos?',
@@ -316,6 +317,7 @@ const translations = {
     'gallery.noStrengths': 'No se identificaron fortalezas',
     'gallery.noWeaknesses': 'No se identificaron debilidades',
     'gallery.noImageAvailable': 'No hay imagen disponible',
+    'upload.takePicture': 'Tomar Foto',
   },
   fr: {
     'app.title': 'Hand - Une agence vous embaucherait-elle pour vos mains?',
@@ -467,6 +469,7 @@ const translations = {
     'gallery.noStrengths': 'Aucune force identifiée',
     'gallery.noWeaknesses': 'Aucune faiblesse identifiée',
     'gallery.noImageAvailable': 'Aucune image disponible',
+    'upload.takePicture': 'Prendre une Photo',
   }
 }
 

@@ -18,6 +18,7 @@ export default function DashboardPage() {
   const router = useRouter()
   const { t } = useLanguage()
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const cameraInputRef = useRef<HTMLInputElement>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [isUploading, setIsUploading] = useState(false)
@@ -37,6 +38,11 @@ export default function DashboardPage() {
     // On mobile, this will show native options (camera, gallery, files)
     // On desktop, this will show file picker
     fileInputRef.current?.click()
+  }
+
+  const handleCameraClick = () => {
+    // Open camera directly
+    cameraInputRef.current?.click()
   }
 
 
@@ -223,11 +229,20 @@ export default function DashboardPage() {
                     </p>
                   </div>
 
-                  {/* Hidden File Input */}
+                  {/* Hidden File Inputs */}
                   <input
                     ref={fileInputRef}
                     type="file"
                     accept="image/*"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                  />
+                  
+                  <input
+                    ref={cameraInputRef}
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
                     onChange={handleFileSelect}
                     className="hidden"
                   />
@@ -277,6 +292,19 @@ export default function DashboardPage() {
                         </div>
                       </div>
                     )}
+                  </div>
+
+                  {/* Mobile Take Picture Button - Only visible on mobile, positioned between upload area and upload button */}
+                  <div className="w-full max-w-md mx-auto block md:hidden mb-4">
+                    <Button
+                      onClick={handleCameraClick}
+                      variant="secondary"
+                      size="lg"
+                      className="w-full text-lg py-4 min-h-[56px] flex items-center justify-center gap-3 touch-manipulation"
+                    >
+                      <span className="text-xl">📸</span>
+                      <span>{t('upload.takePicture')}</span>
+                    </Button>
                   </div>
 
                   {/* Upload Options */}
