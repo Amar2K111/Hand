@@ -103,9 +103,8 @@ export async function POST(request: NextRequest) {
         totalPayments: (userData.totalPayments || 0) + 1
       })
 
-      // Create payment record for tracking using Admin SDK
-      await adminDb.collection('payments').doc(session.id).set({
-        userId: userId,
+      // Create payment record for tracking using Admin SDK (as subcollection under user)
+      await adminDb.collection('users').doc(userId).collection('payments').doc(session.id).set({
         sessionId: session.id,
         amount: session.amount_total,
         currency: session.currency,

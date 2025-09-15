@@ -18,6 +18,11 @@ service cloud.firestore {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
     
+    // Allow users to read their own payment records
+    match /users/{userId}/payments/{paymentId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+    }
+    
     // Allow admin (webhook) to read/write user data and payment records
     match /{document=**} {
       allow read, write: if request.auth != null && request.auth.token.admin == true;
@@ -30,7 +35,7 @@ service cloud.firestore {
 
 1. **User Data Protection**: Users can only access their own data
 2. **Admin Access**: Webhook with admin token can access all data
-3. **Payment Records**: Only admin can create payment records
+3. **Payment Records**: Users can read their own payment history, admin can create payment records
 4. **Critiques**: Users can only access their own critiques
 
 ## 📋 **Setup Steps**
