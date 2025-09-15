@@ -34,6 +34,11 @@ export async function POST(request: NextRequest) {
     const session = event.data.object as Stripe.Checkout.Session
     
     try {
+      console.log('Processing checkout.session.completed event')
+      console.log('Session ID:', session.id)
+      console.log('Payment status:', session.payment_status)
+      console.log('Session metadata:', session.metadata)
+      
       // Verify the payment was successful
       if (session.payment_status !== 'paid') {
         console.error('Payment not completed for session:', session.id)
@@ -71,12 +76,15 @@ export async function POST(request: NextRequest) {
       }
 
       // Get current user data
+      console.log('Fetching user document for ID:', userId)
       const userDoc = await getDoc(userDocRef)
       
       if (!userDoc.exists()) {
         console.error('User document not found for ID:', userId)
         return NextResponse.json({ error: 'User not found' }, { status: 404 })
       }
+      
+      console.log('User document found, processing payment...')
 
       const userData = userDoc.data()
       
@@ -124,7 +132,19 @@ export async function POST(request: NextRequest) {
 
     } catch (error) {
       console.error('Error processing payment:', error)
-      return NextResponse.json({ error: 'Failed to process payment' }, { status: 500 })
+      console.error('Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+        sessionId: session.id,
+        userId: userId,
+        creditsAmount: creditsAmount
+      })
+      return NextResponse.json({ 
+        error: 'Failed to process payment',
+        details: error instanceof Error ? error.message : 'Unknown error',
+        sessionId: session.id,
+        userId: userId
+      }, { status: 500 })
     }
   }
 
