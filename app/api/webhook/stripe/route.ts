@@ -81,6 +81,11 @@ export async function POST(request: NextRequest) {
 
       const userData = userDoc.data()
       
+      if (!userData) {
+        console.error('User document exists but has no data for ID:', userId)
+        return NextResponse.json({ error: 'User data not found' }, { status: 404 })
+      }
+      
       // Check if this payment has already been processed (idempotency)
       if (userData.lastPaymentSessionId === session.id) {
         console.log(`Payment ${session.id} already processed for user ${userId}`)
