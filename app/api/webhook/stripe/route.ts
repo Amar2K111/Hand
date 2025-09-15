@@ -33,6 +33,10 @@ export async function POST(request: NextRequest) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session
     
+    // Get user ID from session metadata or customer email
+    const userId = session.metadata?.user_id
+    const customerEmail = session.customer_details?.email
+    
     try {
       console.log('Processing checkout.session.completed event')
       console.log('Session ID:', session.id)
@@ -44,10 +48,6 @@ export async function POST(request: NextRequest) {
         console.error('Payment not completed for session:', session.id)
         return NextResponse.json({ error: 'Payment not completed' }, { status: 400 })
       }
-
-      // Get user ID from session metadata or customer email
-      const userId = session.metadata?.user_id
-      const customerEmail = session.customer_details?.email
       
       if (!userId && !customerEmail) {
         console.error('No user identifier found in session:', session.id)
