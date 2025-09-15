@@ -201,17 +201,17 @@ export default function DashboardPage() {
                     ) : (
                       <div className="flex items-center justify-center h-full min-h-[200px]">
                         <div className="text-center">
-                          <div className="text-4xl mb-4">📊</div>
+                          <div className="text-4xl mb-4">{hasAvailableCredits() ? '📊' : '💳'}</div>
                           <p className="text-gray-600 mb-6 text-sm sm:text-base">
-                            {t('dashboard.readyForRating')}
+                            {hasAvailableCredits() ? t('dashboard.readyForRating') : 'You need more credits to analyze your hand'}
                           </p>
                           <Button
-                            onClick={canUpload() ? handleGenerateResults : () => router.push('/offer')}
+                            onClick={hasAvailableCredits() ? handleGenerateResults : () => router.push('/offer')}
                             disabled={isGenerating}
                             size="lg"
                             className="px-6 sm:px-8 py-3 text-sm sm:text-base touch-manipulation"
                           >
-                            {isGenerating ? t('dashboard.analyzing') : t('dashboard.generateResults')}
+                            {isGenerating ? t('dashboard.analyzing') : (hasAvailableCredits() ? t('dashboard.generateResults') : 'Buy Credits')}
                           </Button>
                         </div>
                       </div>
