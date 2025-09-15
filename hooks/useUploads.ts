@@ -54,12 +54,17 @@ export const useUploads = () => {
 
   const decrementUploads = async () => {
     if (!user || !uploadsData) {
+      console.log('decrementUploads: No user or uploadsData')
       return false
     }
 
+    console.log('decrementUploads: uploadsData =', uploadsData)
+    console.log('decrementUploads: uploadsRemaining =', uploadsData.uploadsRemaining)
+    console.log('decrementUploads: totalUploads =', uploadsData.totalUploads)
+
     // Check if user has credits before allowing upload
     if (uploadsData.uploadsRemaining <= 0) {
-      console.log('User has no credits remaining')
+      console.log('decrementUploads: User has no credits remaining, returning false')
       return false
     }
 
