@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
+import { adminDb } from '@/lib/firebase-admin'
 import { CREDITS_PACKAGE } from '@/lib/constants'
 
 const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null
@@ -63,23 +62,17 @@ export async function POST(request: NextRequest) {
       console.log('Credits to add:', creditsAmount)
 
       // Find user by ID or email
-      let userDocRef
-      if (userId) {
-        userDocRef = doc(db, 'users', userId)
-      } else {
-        // If no user ID, we need to find user by email
-        // This is a fallback - ideally you should always pass user_id in metadata
-        console.warn('No user_id in metadata, using email lookup as fallback')
-        // For now, we'll log this and return an error since we can't easily query by email
+      if (!userId) {
         console.error('Cannot process payment without user_id in metadata')
         return NextResponse.json({ error: 'User ID required in metadata' }, { status: 400 })
       }
 
-      // Get current user data
+      // Get current user data using Admin SDK
       console.log('Fetching user document for ID:', userId)
-      const userDoc = await getDoc(userDocRef)
+      const userDocRef = adminDb.collection('users').doc(userId)
+      const userDoc = await userDocRef.get()
       
-      if (!userDoc.exists()) {
+      if (!userDoc.exists) {
         console.error('User document not found for ID:', userId)
         return NextResponse.json({ error: 'User not found' }, { status: 404 })
       }
@@ -97,16 +90,16 @@ export async function POST(request: NextRequest) {
       const currentCredits = userData.uploadsRemaining || 0
       const newCredits = currentCredits + creditsAmount
 
-      // Update user's credits
-      await updateDoc(userDocRef, {
+      // Update user's credits using Admin SDK
+      await userDocRef.update({
         uploadsRemaining: newCredits,
         lastPaymentDate: new Date(),
         lastPaymentSessionId: session.id,
         totalPayments: (userData.totalPayments || 0) + 1
       })
 
-      // Create payment record for tracking
-      await setDoc(doc(db, 'payments', session.id), {
+      // Create payment record for tracking using Admin SDK
+      await adminDb.collection('payments').doc(session.id).set({
         userId: userId,
         sessionId: session.id,
         amount: session.amount_total,
