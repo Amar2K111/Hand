@@ -38,6 +38,7 @@ export const useHandCritique = () => {
     // Double check credits before calling decrementUploads
     if (!uploadsData || uploadsData.uploadsRemaining <= 0) {
       console.log('No credits available, throwing error immediately')
+      alert('No credits remaining! You should be redirected to the offer page.')
       throw new Error('No credits remaining. Please purchase more credits to continue.')
     }
     

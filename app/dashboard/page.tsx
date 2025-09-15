@@ -105,6 +105,7 @@ export default function DashboardPage() {
     console.log('Dashboard credit check - uploadsRemaining:', uploadsData?.uploadsRemaining)
     if (!uploadsData || uploadsData.uploadsRemaining <= 0) {
       console.log('Dashboard: No credits, redirecting to offer')
+      alert('Dashboard: No credits remaining! Redirecting to offer page.')
       router.push('/offer')
       return
     }
