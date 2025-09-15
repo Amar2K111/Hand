@@ -100,6 +100,12 @@ export default function DashboardPage() {
       return
     }
 
+    // Check if user has credits before proceeding
+    if (!hasAvailableCredits()) {
+      router.push('/offer')
+      return
+    }
+
     setIsGenerating(true)
     try {
       const result = await uploadAndAnalyze(selectedFile)
@@ -123,6 +129,9 @@ export default function DashboardPage() {
       if (error instanceof Error) {
         if (error.message.includes('not authenticated')) {
           alert(t('dashboard.signinRequired'))
+        } else if (error.message.includes('No credits remaining')) {
+          // Redirect to offer page instead of showing error
+          router.push('/offer')
         } else {
           alert(t('dashboard.generationFailed'))
         }
