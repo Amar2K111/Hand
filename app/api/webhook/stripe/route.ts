@@ -14,6 +14,14 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
+
+  if (!adminDb) {
+    console.error('Firebase Admin not configured - missing service account key')
+    return NextResponse.json(
+      { error: 'Firebase Admin not configured' },
+      { status: 500 }
+    )
+  }
   
   const body = await request.text()
   const signature = request.headers.get('stripe-signature')!
