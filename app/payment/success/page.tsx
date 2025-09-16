@@ -103,21 +103,12 @@ function PaymentSuccessContent() {
               Credits are processed securely via webhook and may take a few moments to appear.
             </p>
           </div>
-          <div className="space-y-3">
-            <Button
-              onClick={() => router.push('/dashboard')}
-              className="w-full"
-            >
-              Go to Dashboard
-            </Button>
-            <Button
-              onClick={() => router.push('/upload')}
-              variant="secondary"
-              className="w-full"
-            >
-              Start Uploading
-            </Button>
-          </div>
+          <Button
+            onClick={() => router.push('/dashboard')}
+            className="w-full"
+          >
+            Go to Dashboard
+          </Button>
         </div>
       </Card>
     </div>
